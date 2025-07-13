@@ -7,6 +7,7 @@ import {
   ResultsProps,
   SuccessFetchAnswer,
 } from '../../interfaces/types';
+import Cards from '../cards/Cards';
 
 export default class ResultBlock extends React.Component<
   ResultsProps & AppState,
@@ -21,40 +22,38 @@ export default class ResultBlock extends React.Component<
       ? localStorage.getItem('text')
       : '';
     const nameOfClass =
-      this.props.config === null ? 'spinner' : 'results-__container';
+      this.props.config === null ? 'spinner' : 'results__container';
 
     const photos: Photo[] | undefined =
-      this.props.config === null
+      this.props.config === null || typeof this.props.config === 'string'
         ? []
         : (this.props.config as SuccessFetchAnswer)?.photos.photo;
 
     if (this.props.config === null) {
       return <div className={nameOfClass}></div>;
     }
-
-    if (this.props.config !== 'bad' && localStorage.getItem('text')) {
+    if (typeof this.props.config !== 'string' && localStorage.getItem('text')) {
       return (
         <div className={nameOfClass}>
           <h1 className="results__heading">
-            {this.props.config === undefined
-              ? 'Nothing was '
-              : this.props.config.photos.total + ' results were '}
+            {this.props.config.photos.total + ' results were '}
             found for request <i>{headingText}</i>
           </h1>
-          После заголовка карточки
-          {photos.map((photo) => (
-            <div key={photo.id}>{photo.url_l}</div>
-          ))}
+          <Cards photos={photos ?? []} headingText={headingText} {...this} />
         </div>
+      );
+    }
+    if (typeof this.props.config === 'string') {
+      return (
+        <div
+          className={nameOfClass}
+        >{`Something went wrong. Mistake:${this.props.config}`}</div>
       );
     }
 
     return (
       <div className={nameOfClass}>
-        Последний
-        {photos.map((photo) => (
-          <div key={photo.id}>{photo.url_l}</div>
-        ))}
+        <Cards photos={photos ?? []} headingText={headingText} {...this} />
       </div>
     );
   }

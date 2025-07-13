@@ -22,19 +22,16 @@ class App extends React.Component<unknown, AppState> {
   }
 
   fetchData() {
-    const fetchArg = localStorage.getItem('text')
-      ? localStorage.getItem('text')
-      : 'photo';
+    const fetchArg = localStorage.getItem('text') || 'photo';
     this.setState({
       config: null,
     });
 
     fetchResults(fetchArg).then((data) => {
-      setTimeout(() => {
-        this.setState({
-          config: data ?? null,
-        });
-      }, 1000);
+      console.log('ставим config=', data);
+      this.setState({
+        config: data ?? null,
+      });
     });
   }
 
@@ -66,11 +63,7 @@ class App extends React.Component<unknown, AppState> {
           setLocalStorage={this.setLocalStorage}
           handleChangeInput={this.handleChangeInput}
         />
-        <ResultBlock
-          text={this.state.heading}
-          config={this.state.config}
-          heading={this.state.heading}
-        />
+        <ResultBlock {...this.state} />
       </div>
     );
   }

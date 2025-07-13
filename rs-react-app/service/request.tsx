@@ -1,9 +1,11 @@
 import { SuccessFetchAnswer } from '../interfaces/types';
 
 let counter = 0;
+
 export default async function fetchResults(
   inputText: string | null
-): Promise<SuccessFetchAnswer | 'bad' | undefined> {
+): Promise<SuccessFetchAnswer | 'bad' | undefined | string> {
+  console.log(counter);
   if (inputText) {
     try {
       const result = await fetch(
@@ -13,7 +15,9 @@ export default async function fetchResults(
         const answer = await result.json();
         counter = 0;
         return answer;
-      } else return 'bad';
+      } else {
+        return String(result.status);
+      }
     } catch (error: unknown) {
       if (error instanceof Error) {
         if (error.name === 'TypeError') {
@@ -22,8 +26,9 @@ export default async function fetchResults(
             await new Promise((resolve) => setTimeout(resolve, 1000));
             return fetchResults(inputText);
           }
+          return error.message;
         }
-        return 'bad';
+        return error.message;
       }
     }
     return;

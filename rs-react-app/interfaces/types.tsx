@@ -44,3 +44,8 @@ export type Photos = {
 };
 
 export type SuccessFetchAnswer = { photos: Photos; stat: 'ok' };
+
+export type CardProps = {
+  photos: Photo[];
+  headingText: string | null;
+};
