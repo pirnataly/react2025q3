@@ -5,7 +5,6 @@ let counter = 0;
 export default async function fetchResults(
   inputText: string | null
 ): Promise<SuccessFetchAnswer | 'bad' | undefined | string> {
-  console.log(counter);
   if (inputText) {
     try {
       const result = await fetch(

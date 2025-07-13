@@ -28,7 +28,6 @@ class App extends React.Component<unknown, AppState> {
     });
 
     fetchResults(fetchArg).then((data) => {
-      console.log('ставим config=', data);
       this.setState({
         config: data ?? null,
       });

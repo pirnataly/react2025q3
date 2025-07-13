@@ -3,7 +3,7 @@ import * as React from 'react';
 export type AppState = {
   text: string;
   heading: string;
-  config: null | SuccessFetchAnswer | 'bad';
+  config: null | SuccessFetchAnswer | 'bad' | string;
 };
 
 export type AppProps = {
