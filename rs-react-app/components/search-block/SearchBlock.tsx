@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './SearchBlock.css';
-import { MyProps, MyState } from '../../interfaces/types';
+import { AppProps, AppState } from '../../interfaces/types';
 
-class SearchBlock extends React.Component<MyProps, MyState> {
-  public constructor(props: MyProps) {
+class SearchBlock extends React.Component<AppProps, AppState> {
+  public constructor(props: AppProps) {
     super(props);
   }
 
