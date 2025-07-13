@@ -15,7 +15,7 @@ export default async function fetchResults(
         counter = 0;
         return answer;
       } else {
-        return String(result.status);
+        return `${result.status} — Non-successful response`;
       }
     } catch (error: unknown) {
       if (error instanceof Error) {
