@@ -1,0 +1,11 @@
+.fallback {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+.fallback__heading {
+  margin: 20px;
+}

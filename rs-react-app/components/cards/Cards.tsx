@@ -17,7 +17,7 @@ export default class Cards extends React.Component<
       <div className="cards-container">
         {photos.map((post) => (
           <div className="results-card" key={post.id}>
-            <div className="results-card__image">
+            <div>
               <img
                 src={post.url_l}
                 className="results-card__image"

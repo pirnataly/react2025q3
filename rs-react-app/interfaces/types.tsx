@@ -4,6 +4,7 @@ export type AppState = {
   text: string;
   heading: string;
   config: null | SuccessFetchAnswer | 'bad' | string;
+  crash: boolean;
 };
 
 export type AppProps = {
