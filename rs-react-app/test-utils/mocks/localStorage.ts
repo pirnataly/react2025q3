@@ -1,6 +1,6 @@
 import { vi, beforeEach } from 'vitest';
 
-const localStorageMock = (() => {
+export const localStorageMock = (() => {
   let store: Record<string, string> = {};
   return {
     getItem: (key: string) => store[key] || null,
@@ -19,6 +19,7 @@ Object.defineProperty(window, 'localStorage', {
 
 export const mockHandleChangeInput = vi.fn();
 export const mockSetLocalStorage = vi.fn();
+
 export function windowClear() {
   beforeEach(() => {
     window.localStorage.clear();

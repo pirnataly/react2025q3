@@ -13,7 +13,7 @@ export type AppProps = {
   setLocalStorage: () => void;
 };
 
-export type ResultsProps = Pick<AppState, 'config'>;
+export type ResultProps = Pick<AppState, 'config'>;
 
 export type ResultBlockState = {
   photos: Photo[];

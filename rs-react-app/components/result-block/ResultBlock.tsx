@@ -4,16 +4,16 @@ import {
   AppState,
   Photo,
   ResultBlockState,
-  ResultsProps,
+  ResultProps,
   SuccessFetchAnswer,
 } from '../../interfaces/types';
 import Cards from '../cards/Cards';
 
-export default class ResultBlock extends React.Component<
-  ResultsProps & AppState,
-  ResultBlockState & ResultBlock
+class ResultBlock extends React.Component<
+  ResultProps & AppState,
+  ResultBlockState
 > {
-  public constructor(props: ResultsProps & AppState) {
+  public constructor(props: ResultProps & AppState) {
     super(props);
   }
 
@@ -59,3 +59,5 @@ export default class ResultBlock extends React.Component<
     );
   }
 }
+
+export default ResultBlock;
