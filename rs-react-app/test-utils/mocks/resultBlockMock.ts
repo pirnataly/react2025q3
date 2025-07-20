@@ -1,6 +1,6 @@
 import { Photo, Photos, SuccessFetchAnswer } from '../../interfaces/types';
 
-const mockPhotos: Photo[] = [
+export const mockPhotos: Photo[] = [
   {
     farm: 66,
     height_l: 1024,

@@ -3,10 +3,7 @@ import { CardProps, Photo } from '../../interfaces/types';
 import ResultBlock from '../result-block/ResultBlock';
 import './Cards.css';
 
-export default class Cards extends React.Component<
-  CardProps & ResultBlock,
-  unknown
-> {
+export default class Cards extends React.Component<CardProps, unknown> {
   public constructor(props: CardProps & ResultBlock) {
     super(props);
   }
