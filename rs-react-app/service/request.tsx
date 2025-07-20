@@ -25,7 +25,6 @@ export default async function fetchResults(
             await new Promise((resolve) => setTimeout(resolve, 1000));
             return fetchResults(inputText);
           }
-
           return error.message;
         }
         return error.message;
