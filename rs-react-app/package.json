@@ -12,7 +12,6 @@
     "prepare": "cd .. && husky rs-react-app/.husky",
     "precommit": "lint-staged",
     "test": "vitest",
-    "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
