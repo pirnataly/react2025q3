@@ -4,6 +4,7 @@ export type AppState = {
   text: string;
   heading: string;
   config: null | SuccessFetchAnswer | 'bad' | string;
+  crash: boolean;
 };
 
 export type AppProps = {
@@ -12,7 +13,7 @@ export type AppProps = {
   setLocalStorage: () => void;
 };
 
-export type ResultsProps = Pick<AppState, 'config'>;
+export type ResultProps = Pick<AppState, 'config'>;
 
 export type ResultBlockState = {
   photos: Photo[];

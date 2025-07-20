@@ -6,16 +6,22 @@ import { AppState } from '../interfaces/types';
 import fetchResults from '../service/request';
 
 class App extends React.Component<unknown, AppState> {
-  constructor(props: unknown) {
+  public constructor(props: unknown) {
     super(props);
     this.state = {
       text: localStorage.getItem('text') ?? '',
       heading: localStorage.getItem('text') ?? '',
       config: null,
+      crash: false,
     };
     this.setLocalStorage = this.setLocalStorage.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.handleCrash = this.handleCrash.bind(this);
   }
+
+  handleCrash = () => {
+    this.setState({ crash: true });
+  };
 
   componentDidMount() {
     this.fetchData();
@@ -55,6 +61,9 @@ class App extends React.Component<unknown, AppState> {
   }
 
   render() {
+    if (this.state.crash) {
+      throw new Error('Ошибка при рендере компонента');
+    }
     return (
       <div className="app">
         <SearchBlock
@@ -63,6 +72,9 @@ class App extends React.Component<unknown, AppState> {
           handleChangeInput={this.handleChangeInput}
         />
         <ResultBlock {...this.state} />
+        <button type={'button'} className={'button'} onClick={this.handleCrash}>
+          {'ErrorBoundary'}
+        </button>
       </div>
     );
   }
