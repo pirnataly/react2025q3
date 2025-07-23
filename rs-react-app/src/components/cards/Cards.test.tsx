@@ -1,14 +1,12 @@
 import { expect, it, describe } from 'vitest';
 import { render, screen } from '@testing-library/react';
-
 import {
   mockPhotos,
   mockSuccessConfig,
-} from '../../test-utils/mocks/resultBlockMock';
-import * as React from 'react';
-import Cards from './Cards';
+} from '../../../test-utils/mocks/resultBlockMock';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
+import { Cards } from './Cards';
 
 describe('Rendering test for Cards', () => {
   it('Renders correct number of items when photos is provided', () => {

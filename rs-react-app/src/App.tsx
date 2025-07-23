@@ -1,78 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
-import SearchBlock from './components/search-block/SearchBlock';
 import ResultBlock from './components/result-block/ResultBlock';
-import { AppState } from './interfaces/types';
+import { ConfigType } from './interfaces/types';
 import fetchResults from './service/request';
+import { SearchBlock } from './components/search-block/SearchBlock';
 
-class App extends React.Component<unknown, AppState> {
-  public constructor(props: unknown) {
-    super(props);
-    this.state = {
-      text: localStorage.getItem('text') ?? '',
-      heading: localStorage.getItem('text') ?? '',
-      config: null,
-      crash: false,
-    };
-    this.setLocalStorage = this.setLocalStorage.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.handleCrash = this.handleCrash.bind(this);
+export function App() {
+  const [text, setText] = useState(localStorage.getItem('text') ?? '');
+  const [config, setConfig] = useState<ConfigType>(null);
+  const [crash, setCrash] = useState(false);
+
+  function handleCrash() {
+    setCrash(true);
   }
 
-  handleCrash = () => {
-    this.setState({ crash: true });
-  };
-
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData() {
+  function fetchData() {
     const fetchArg = localStorage.getItem('text') || 'photo';
-    this.setState({
-      config: null,
-    });
-
+    setConfig(null);
     fetchResults(fetchArg).then((data) => {
-      this.setState({
-        config: data ?? null,
-      });
+      setConfig(data ?? null);
     });
   }
 
-  handleChangeInput: React.ChangeEventHandler<HTMLInputElement> = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  useEffect(fetchData, []);
+
+  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>): void {
     if (e.target) {
       const { value } = e.target;
-      this.setState({
-        text: String(value),
-      });
+      setText(String(value));
     }
-  };
+  }
 
-  setLocalStorage(): void {
-    if (this.state.text) {
-      localStorage.setItem('text', this.state.text.trim());
+  function setLocalStorage(): void {
+    if (text) {
+      localStorage.setItem('text', text.trim());
     } else {
       localStorage.removeItem('text');
     }
-    this.fetchData();
+    fetchData();
   }
 
-  render() {
-    if (this.state.crash) {
+  {
+    if (crash) {
       throw new Error('Ошибка при рендере компонента');
     }
     return (
       <div className="app">
         <SearchBlock
-          text={this.state.text}
-          setLocalStorage={this.setLocalStorage}
-          handleChangeInput={this.handleChangeInput}
+          text={text}
+          setLocalStorage={setLocalStorage}
+          handleChangeInput={handleChangeInput}
         />
-        <ResultBlock {...this.state} />
-        <button type={'button'} className={'button'} onClick={this.handleCrash}>
+        <ResultBlock config={config} />
+        <button type={'button'} className={'button'} onClick={handleCrash}>
           {'ErrorBoundary'}
         </button>
       </div>

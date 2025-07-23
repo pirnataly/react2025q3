@@ -23,9 +23,7 @@ describe('Rendering tests for ResultBlock', () => {
 
     localStorage.setItem('text', 'nothing');
 
-    render(
-      <ResultBlock config={emptyConfig} text="" heading="" crash={false} />
-    );
+    render(<ResultBlock config={emptyConfig} />);
 
     expect(
       screen.getByText(/0 results were found for request/i)
@@ -35,14 +33,7 @@ describe('Rendering tests for ResultBlock', () => {
   it('Renders correct number of items when data is provided', () => {
     localStorage.setItem('text', 'cats');
 
-    render(
-      <ResultBlock
-        config={mockSuccessConfig}
-        text=""
-        heading=""
-        crash={false}
-      />
-    );
+    render(<ResultBlock config={mockSuccessConfig} />);
 
     const cards = screen.getAllByRole('img');
     expect(cards.length).toBe(mockSuccessConfig.photos.photo.length);
@@ -54,9 +45,7 @@ describe('Rendering tests for ResultBlock', () => {
   });
 
   it('Shows loading state while fetching data', () => {
-    const { container } = render(
-      <ResultBlock config={null} text="" heading="" crash={false} />
-    );
+    const { container } = render(<ResultBlock config={null} />);
     const spinner = container.querySelector('.spinner');
     expect(spinner).toBeInTheDocument();
   });
@@ -66,14 +55,7 @@ describe('ResultBlock Data Display Tests', () => {
   it('Correctly displays item titles', () => {
     localStorage.setItem('text', 'photos');
 
-    render(
-      <ResultBlock
-        config={mockSuccessConfig}
-        text=""
-        heading=""
-        crash={false}
-      />
-    );
+    render(<ResultBlock config={mockSuccessConfig} />);
 
     for (const photo of mockSuccessConfig.photos.photo) {
       expect(screen.getByText(photo.title)).toBeInTheDocument();
@@ -85,9 +67,7 @@ describe('ResultBlock Error Handling Tests', () => {
   it('Displays error message when API call fails', () => {
     const errorMessage = '500 — Non-successful response';
 
-    render(
-      <ResultBlock config={errorMessage} text="" heading="" crash={false} />
-    );
+    render(<ResultBlock config={errorMessage} />);
 
     expect(
       screen.getByText(`Something went wrong. Mistake:${errorMessage}`)

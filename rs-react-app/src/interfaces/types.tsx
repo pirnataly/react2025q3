@@ -7,6 +7,8 @@ export type AppState = {
   crash: boolean;
 };
 
+export type ConfigType = AppState['config'];
+
 export type AppProps = {
   text: string;
   handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -14,12 +16,6 @@ export type AppProps = {
 };
 
 export type ResultProps = Pick<AppState, 'config'>;
-
-export type ResultBlockState = {
-  photos: Photo[];
-  headingText: string;
-  nameOfClass: string;
-};
 
 export type Photo = {
   farm: number;

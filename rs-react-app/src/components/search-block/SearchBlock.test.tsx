@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import SearchBlock from './SearchBlock';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
 import {
@@ -8,6 +7,7 @@ import {
   mockSetLocalStorage,
   windowClear,
 } from '../../../test-utils/mocks/localStorage';
+import { SearchBlock } from './SearchBlock';
 
 describe('SearchBlock rendering tests ', () => {
   it('renders search input and button', () => {
