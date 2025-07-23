@@ -1,12 +1,12 @@
-import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
-import { windowClear } from '../../test-utils/mocks/localStorage';
-import { mockSuccessConfig } from '../../test-utils/mocks/resultBlockMock';
-import { SuccessFetchAnswer } from '../../interfaces/types';
+import { windowClear } from '../../../test-utils/mocks/localStorage';
+import { mockSuccessConfig } from '../../../test-utils/mocks/resultBlockMock';
+
 import ResultBlock from './ResultBlock';
+import { SuccessFetchAnswer } from '../../interfaces/types';
 
 describe('Rendering tests for ResultBlock', () => {
   windowClear();
@@ -57,7 +57,6 @@ describe('Rendering tests for ResultBlock', () => {
     const { container } = render(
       <ResultBlock config={null} text="" heading="" crash={false} />
     );
-
     const spinner = container.querySelector('.spinner');
     expect(spinner).toBeInTheDocument();
   });

@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
-import SearchBlock from '../components/search-block/SearchBlock';
-import ResultBlock from '../components/result-block/ResultBlock';
-import { AppState } from '../interfaces/types';
-import fetchResults from '../service/request';
+import SearchBlock from './components/search-block/SearchBlock';
+import ResultBlock from './components/result-block/ResultBlock';
+import { AppState } from './interfaces/types';
+import fetchResults from './service/request';
 
 class App extends React.Component<unknown, AppState> {
   public constructor(props: unknown) {

@@ -7,7 +7,7 @@ import {
   mockHandleChangeInput,
   mockSetLocalStorage,
   windowClear,
-} from '../../test-utils/mocks/localStorage';
+} from '../../../test-utils/mocks/localStorage';
 
 describe('SearchBlock rendering tests ', () => {
   it('renders search input and button', () => {

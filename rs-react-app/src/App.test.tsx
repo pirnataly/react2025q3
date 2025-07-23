@@ -1,6 +1,5 @@
 import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
 import App from './App';
@@ -9,7 +8,7 @@ import {
   localStorageMock,
 } from '../test-utils/mocks/localStorage';
 import { mockSuccessConfig } from '../test-utils/mocks/resultBlockMock';
-import * as fetchModule from '../service/request';
+import * as fetchModule from './service/request';
 
 windowClear();
 
