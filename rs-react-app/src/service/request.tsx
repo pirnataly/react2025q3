@@ -3,12 +3,13 @@ import { SuccessFetchAnswer } from '../interfaces/types';
 let counter = 0;
 
 export default async function fetchResults(
-  inputText: string | null
+  inputText: string | null,
+  page = 1
 ): Promise<SuccessFetchAnswer | 'bad' | undefined | string> {
   if (inputText) {
     try {
       const result = await fetch(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d50b74cc2abc8ca99a668840bd5db3e4&tags=${inputText}&extras=url_l&format=json&nojsoncallback=1&per_page=20&page=1&content_types=0&privacy_filter=1`
+        `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=d50b74cc2abc8ca99a668840bd5db3e4&tags=${inputText}&extras=url_l&format=json&nojsoncallback=1&per_page=20&page=${page}&content_types=0&privacy_filter=1`
       );
       if (result.ok) {
         const answer = await result.json();

@@ -12,10 +12,14 @@ export type ConfigType = AppState['config'];
 export type AppProps = {
   text: string;
   handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  setLocalStorage: () => void;
+  setLocalStorage: (e: React.FormEvent) => void;
 };
-
-export type ResultProps = Pick<AppState, 'config'>;
+// Pick<AppState, 'config'> &
+export type ResultProps = {
+  changePage: (page: number) => void;
+  page: number;
+  result: AppState['config'];
+};
 
 export type Photo = {
   farm: number;
@@ -45,4 +49,10 @@ export type SuccessFetchAnswer = { photos: Photos; stat: 'ok' };
 export type CardProps = {
   photos: Photo[];
   headingText: string | null;
+};
+
+export type PaginationType = {
+  pages: number;
+  page: number;
+  changePage: (p: number) => void;
 };

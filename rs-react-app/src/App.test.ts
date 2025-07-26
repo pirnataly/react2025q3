@@ -28,7 +28,7 @@ describe('Integration tests ', () => {
     window.localStorage.setItem('text', 'nature');
     renderWithRouter(RouterComponent);
     await waitFor(() => {
-      expect(fetchSpy).toHaveBeenCalledWith('nature');
+      expect(fetchSpy).toHaveBeenCalledWith('nature', 1);
     });
   });
 });
@@ -41,7 +41,7 @@ describe('API Integration tests ', () => {
     window.localStorage.setItem('text', 'flowers');
     renderWithRouter(RouterComponent);
     await waitFor(() => {
-      expect(fetchMock).toHaveBeenCalledWith('flowers');
+      expect(fetchMock).toHaveBeenCalledWith('flowers', 1);
     });
   });
 

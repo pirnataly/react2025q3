@@ -44,7 +44,7 @@ describe('fetchResults', () => {
   });
 
   it('returns undefined for null input', () => {
-    fetchResults(null).then((result) => {
+    fetchResults(null, 1).then((result) => {
       expect(result).toBeUndefined();
       expect(fetch).not.toHaveBeenCalled();
     });

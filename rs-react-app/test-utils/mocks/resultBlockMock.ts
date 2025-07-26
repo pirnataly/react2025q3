@@ -1,4 +1,5 @@
 import { Photo, Photos, SuccessFetchAnswer } from '../../src/interfaces/types';
+import { vi } from 'vitest';
 
 export const mockPhotos: Photo[] = [
   {
@@ -57,3 +58,5 @@ export const mockSuccessConfig: SuccessFetchAnswer = {
   photos: mockPhotosData,
   stat: 'ok',
 };
+
+export const mockChangePage = vi.fn();

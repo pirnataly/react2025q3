@@ -3,7 +3,10 @@ import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
 import { windowClear } from '../../../test-utils/mocks/localStorage';
-import { mockSuccessConfig } from '../../../test-utils/mocks/resultBlockMock';
+import {
+  mockChangePage,
+  mockSuccessConfig,
+} from '../../../test-utils/mocks/resultBlockMock';
 
 import ResultBlock from './ResultBlock';
 import { SuccessFetchAnswer } from '../../interfaces/types';
@@ -23,7 +26,9 @@ describe('Rendering tests for ResultBlock', () => {
 
     localStorage.setItem('text', 'nothing');
 
-    render(<ResultBlock config={emptyConfig} />);
+    render(
+      <ResultBlock result={emptyConfig} page={1} changePage={mockChangePage} />
+    );
 
     expect(
       screen.getByText(/0 results were found for request/i)
@@ -33,7 +38,13 @@ describe('Rendering tests for ResultBlock', () => {
   it('Renders correct number of items when data is provided', () => {
     localStorage.setItem('text', 'cats');
 
-    render(<ResultBlock config={mockSuccessConfig} />);
+    render(
+      <ResultBlock
+        result={mockSuccessConfig}
+        page={1}
+        changePage={mockChangePage}
+      />
+    );
 
     const cards = screen.getAllByRole('img');
     expect(cards.length).toBe(mockSuccessConfig.photos.photo.length);
@@ -45,7 +56,9 @@ describe('Rendering tests for ResultBlock', () => {
   });
 
   it('Shows loading state while fetching data', () => {
-    const { container } = render(<ResultBlock config={null} />);
+    const { container } = render(
+      <ResultBlock result={null} page={1} changePage={mockChangePage} />
+    );
     const spinner = container.querySelector('.spinner');
     expect(spinner).toBeInTheDocument();
   });
@@ -55,7 +68,13 @@ describe('ResultBlock Data Display Tests', () => {
   it('Correctly displays item titles', () => {
     localStorage.setItem('text', 'photos');
 
-    render(<ResultBlock config={mockSuccessConfig} />);
+    render(
+      <ResultBlock
+        result={mockSuccessConfig}
+        page={1}
+        changePage={mockChangePage}
+      />
+    );
 
     for (const photo of mockSuccessConfig.photos.photo) {
       expect(screen.getByText(photo.title)).toBeInTheDocument();
@@ -67,7 +86,9 @@ describe('ResultBlock Error Handling Tests', () => {
   it('Displays error message when API call fails', () => {
     const errorMessage = '500 — Non-successful response';
 
-    render(<ResultBlock config={errorMessage} />);
+    render(
+      <ResultBlock result={errorMessage} page={1} changePage={mockChangePage} />
+    );
 
     expect(
       screen.getByText(`Something went wrong. Mistake:${errorMessage}`)
