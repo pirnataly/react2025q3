@@ -60,3 +60,6 @@ export const mockSuccessConfig: SuccessFetchAnswer = {
 };
 
 export const mockChangePage = vi.fn();
+export const mockSetSearchParams = vi.fn();
+export const mockShowModal = vi.fn();
+export const mockUrlSearchParams = new URLSearchParams();

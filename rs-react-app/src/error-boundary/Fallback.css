@@ -6,7 +6,8 @@
   font-size: 2rem;
 }
 
-.fallback__heading {
+.fallback__heading,
+.fallback__paragraph {
   margin: 20px;
   text-align: center;
 }

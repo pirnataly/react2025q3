@@ -43,6 +43,7 @@ export default function Pagination({
       {resultArr.map((p) => (
         <button
           key={p}
+          aria-label={p.toString()}
           onClick={() => changePage(p)}
           className={
             p === page

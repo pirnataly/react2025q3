@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { URLSearchParamsInit } from 'react-router';
 
 export type AppState = {
   text: string;
@@ -19,6 +20,11 @@ export type ResultProps = {
   changePage: (page: number) => void;
   page: number;
   result: AppState['config'];
+  isPhotoLoading: boolean;
+  showModal: (arg: boolean) => void;
+  setSearchParams: (arg: URLSearchParamsInit) => void;
+  params: URLSearchParams;
+  errorMessage: string;
 };
 
 export type Photo = {
@@ -49,10 +55,37 @@ export type SuccessFetchAnswer = { photos: Photos; stat: 'ok' };
 export type CardProps = {
   photos: Photo[];
   headingText: string | null;
+  showModal: (arg: boolean) => void;
+  setSearchParams: (arg: URLSearchParamsInit) => void;
+  params: URLSearchParams;
 };
 
 export type PaginationType = {
   pages: number;
   page: number;
   changePage: (p: number) => void;
+};
+
+export type ModalProps = {
+  visible: boolean;
+  setVisible: (arg: boolean) => void;
+  setSearchParams: (arg: URLSearchParamsInit) => void;
+  id: string | null;
+  params: URLSearchParams;
+};
+
+export type ModalComponent = Pick<ModalProps, 'id'>;
+
+export type PhotoByIdType = {
+  dates: {
+    taken: string;
+  };
+  owner: {
+    realname: string;
+  };
+  id: string;
+  secret: string;
+  server: string;
+  title: { _content: string };
+  views: string;
 };

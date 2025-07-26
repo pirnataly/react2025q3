@@ -2,8 +2,17 @@ import './ResultBlock.css';
 import { Photo, ResultProps } from '../../interfaces/types';
 import { Cards } from '../cards/Cards';
 import Pagination from '../ui/Pagination';
+import Loader from '../ui/loader/Loader';
 
-function ResultBlock({ changePage, result, page }: ResultProps) {
+function ResultBlock({
+  changePage,
+  result,
+  page,
+  showModal,
+  setSearchParams,
+  isPhotoLoading,
+  params,
+}: ResultProps) {
   const resultFromRequest = result ?? 'bad';
   const photos: [] | Photo[] =
     typeof resultFromRequest === 'string' ||
@@ -43,12 +52,14 @@ function ResultBlock({ changePage, result, page }: ResultProps) {
     return (
       <div
         className={nameOfClass}
-      >{`Something went wrong. Mistake:${result}`}</div>
+      >{`Something went wrong. Mistake:${resultFromRequest}`}</div>
     );
   }
 
-  if (resultFromRequest === 'bad') {
-    return <div className={nameOfClass}></div>;
+  // if (resultFromRequest === 'bad') {
+  //   return <div className={nameOfClass}></div>;
+  if (isPhotoLoading) {
+    return <Loader />;
   } else {
     if (localStorage.getItem('text')) {
       return (
@@ -57,7 +68,13 @@ function ResultBlock({ changePage, result, page }: ResultProps) {
             {total + ' results were '}
             found for request <i>{headingText}</i>
           </h1>
-          <Cards photos={photos ?? []} headingText={headingText} />
+          <Cards
+            photos={photos ?? []}
+            headingText={headingText}
+            showModal={showModal}
+            setSearchParams={setSearchParams}
+            params={params}
+          />
           <Pagination pages={pages} page={page} changePage={changePage} />
         </div>
       );
@@ -66,7 +83,13 @@ function ResultBlock({ changePage, result, page }: ResultProps) {
 
   return (
     <div className={nameOfClass}>
-      <Cards photos={photos ?? []} headingText={headingText} />
+      <Cards
+        photos={photos ?? []}
+        headingText={headingText}
+        setSearchParams={setSearchParams}
+        params={params}
+        showModal={showModal}
+      />
       <Pagination pages={pages} page={page} changePage={changePage} />
     </div>
   );

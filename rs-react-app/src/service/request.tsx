@@ -1,7 +1,7 @@
 import { SuccessFetchAnswer } from '../interfaces/types';
 
 let counter = 0;
-
+console.log(counter);
 export default async function fetchResults(
   inputText: string | null,
   page = 1
@@ -16,7 +16,9 @@ export default async function fetchResults(
         counter = 0;
         return answer;
       } else {
-        return `${result.status} — Non-successful response`;
+        return result.status === 404
+          ? '404'
+          : `${result.status} — Non-successful response`;
       }
     } catch (error: unknown) {
       if (error instanceof Error) {

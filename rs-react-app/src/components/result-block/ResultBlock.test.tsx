@@ -5,7 +5,10 @@ import '@testing-library/dom';
 import { windowClear } from '../../../test-utils/mocks/localStorage';
 import {
   mockChangePage,
+  mockSetSearchParams,
+  mockShowModal,
   mockSuccessConfig,
+  mockUrlSearchParams,
 } from '../../../test-utils/mocks/resultBlockMock';
 
 import ResultBlock from './ResultBlock';
@@ -25,9 +28,17 @@ describe('Rendering tests for ResultBlock', () => {
     };
 
     localStorage.setItem('text', 'nothing');
-
     render(
-      <ResultBlock result={emptyConfig} page={1} changePage={mockChangePage} />
+      <ResultBlock
+        result={emptyConfig}
+        page={1}
+        changePage={mockChangePage}
+        showModal={mockShowModal}
+        setSearchParams={mockSetSearchParams}
+        errorMessage={''}
+        isPhotoLoading={false}
+        params={mockUrlSearchParams}
+      />
     );
 
     expect(
@@ -43,6 +54,11 @@ describe('Rendering tests for ResultBlock', () => {
         result={mockSuccessConfig}
         page={1}
         changePage={mockChangePage}
+        showModal={mockShowModal}
+        setSearchParams={mockSetSearchParams}
+        errorMessage={''}
+        isPhotoLoading={false}
+        params={mockUrlSearchParams}
       />
     );
 
@@ -57,7 +73,16 @@ describe('Rendering tests for ResultBlock', () => {
 
   it('Shows loading state while fetching data', () => {
     const { container } = render(
-      <ResultBlock result={null} page={1} changePage={mockChangePage} />
+      <ResultBlock
+        result={null}
+        page={1}
+        changePage={mockChangePage}
+        showModal={mockShowModal}
+        setSearchParams={mockSetSearchParams}
+        errorMessage={''}
+        isPhotoLoading={false}
+        params={mockUrlSearchParams}
+      />
     );
     const spinner = container.querySelector('.spinner');
     expect(spinner).toBeInTheDocument();
@@ -73,6 +98,11 @@ describe('ResultBlock Data Display Tests', () => {
         result={mockSuccessConfig}
         page={1}
         changePage={mockChangePage}
+        showModal={mockShowModal}
+        setSearchParams={mockSetSearchParams}
+        errorMessage={''}
+        isPhotoLoading={false}
+        params={mockUrlSearchParams}
       />
     );
 
@@ -87,7 +117,16 @@ describe('ResultBlock Error Handling Tests', () => {
     const errorMessage = '500 — Non-successful response';
 
     render(
-      <ResultBlock result={errorMessage} page={1} changePage={mockChangePage} />
+      <ResultBlock
+        result={errorMessage}
+        page={1}
+        changePage={mockChangePage}
+        showModal={mockShowModal}
+        setSearchParams={mockSetSearchParams}
+        errorMessage={''}
+        isPhotoLoading={false}
+        params={mockUrlSearchParams}
+      />
     );
 
     expect(
