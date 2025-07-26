@@ -15,7 +15,6 @@ export function App() {
   const [text, setText] = useState(localStorage.getItem('text') ?? '');
   const [heading, setHeading] = useState(localStorage.getItem('text') ?? '');
   const [config, setConfig] = useState<ConfigType>('null');
-  const [crash, setCrash] = useState(false);
   const page = params.get('page') ? Number(params.get('page')) : 1;
   const id: string | null = params.get('detail') ? params.get('detail') : null;
   const [modal, setModal] = useState(!!id);
@@ -44,10 +43,6 @@ export function App() {
     setSearchParams({ page: String(p) });
   };
 
-  function handleCrash() {
-    setCrash(true);
-  }
-
   function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>): void {
     if (e.target) {
       const { value } = e.target;
@@ -71,12 +66,7 @@ export function App() {
     },
     [text, setHeading, navigate, page, params]
   );
-
   {
-    if (crash) {
-      throw new Error('Ошибка при рендере компонента');
-    }
-
     return (
       <div className="app">
         <div
@@ -114,9 +104,6 @@ export function App() {
           params={params}
           errorMessage={errorMessage}
         />
-        <button type={'button'} className={'button'} onClick={handleCrash}>
-          {'ErrorBoundary'}
-        </button>
         <Modal
           visible={modal}
           setVisible={setModal}
