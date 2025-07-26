@@ -4,6 +4,7 @@ import ResultBlock from './components/result-block/ResultBlock';
 import { ConfigType } from './interfaces/types';
 import fetchResults from './service/request';
 import { SearchBlock } from './components/search-block/SearchBlock';
+import { Link } from 'react-router';
 
 export function App() {
   const [text, setText] = useState(localStorage.getItem('text') ?? '');
@@ -46,6 +47,9 @@ export function App() {
     }
     return (
       <div className="app">
+        <Link to={'about'} className={'link app__link'}>
+          About
+        </Link>
         <SearchBlock
           text={text}
           setLocalStorage={setLocalStorage}

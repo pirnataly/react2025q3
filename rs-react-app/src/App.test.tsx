@@ -1,21 +1,21 @@
-import { render, screen, waitFor, fireEvent } from '@testing-library/react';
+import { screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
-import App from './App';
 import {
   windowClear,
   localStorageMock,
 } from '../test-utils/mocks/localStorage';
 import { mockSuccessConfig } from '../test-utils/mocks/resultBlockMock';
 import * as fetchModule from './service/request';
+import { renderApp } from '../test-utils/renderApp';
 
 windowClear();
 
 describe('Integration tests ', () => {
   it(' Handles search term from localStorage on initial load', () => {
     localStorageMock.setItem('text', 'cats');
-    render(<App />);
+    renderApp();
     const input = screen.getByPlaceholderText('Введите текст');
     expect(input).toHaveValue('cats');
   });
@@ -25,7 +25,7 @@ describe('Integration tests ', () => {
       .spyOn(fetchModule, 'default')
       .mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'nature');
-    render(<App />);
+    renderApp();
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledWith('nature');
     });
@@ -38,9 +38,7 @@ describe('API Integration tests ', () => {
       .spyOn(fetchModule, 'default')
       .mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'flowers');
-
-    render(<App />);
-
+    renderApp();
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith('flowers');
     });
@@ -49,7 +47,7 @@ describe('API Integration tests ', () => {
   it('Handles successful API responses', async () => {
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'sky');
-    render(<App />);
+    renderApp();
     await waitFor(() => {
       expect(screen.getByText(/sky/i)).toBeInTheDocument();
     });
@@ -60,8 +58,7 @@ describe('API Integration tests ', () => {
       '500 — Non-successful response'
     );
     window.localStorage.setItem('text', 'fail');
-    render(<App />);
-
+    renderApp();
     await waitFor(() => {
       expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
     });
@@ -72,8 +69,7 @@ describe('State Management Test', () => {
   it('Updates component state based on API responses', async () => {
     window.localStorage.setItem('text', 'milk');
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
-    render(<App />);
-
+    renderApp();
     await waitFor(() => {
       expect(screen.getByText(/results were found/i)).toBeInTheDocument();
     });
@@ -82,8 +78,7 @@ describe('State Management Test', () => {
   it('Manages search term state correctly', async () => {
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'new-term');
-    render(<App />);
-
+    renderApp();
     await waitFor(() => {
       expect(screen.getByDisplayValue('new-term')).toBeInTheDocument();
     });
@@ -92,7 +87,7 @@ describe('State Management Test', () => {
 
 describe('User Interaction Tests', () => {
   it('should trim whitespace from search input before saving', () => {
-    render(<App />);
+    renderApp();
     const input = screen.getByPlaceholderText('Введите текст');
     fireEvent.change(input, { target: { value: '   react test   ' } });
     fireEvent.click(screen.getByText('Search'));

@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 #root {
   max-width: 1200px;
   width: 100%;
@@ -23,4 +27,12 @@
 
 .button {
   padding: 8px 10px;
+}
+
+.link {
+  color: #8dcfec;
+}
+
+.app__link {
+  margin-bottom: 20px;
 }
