@@ -20,7 +20,7 @@ export default function About() {
             RS School React course
           </Link>
           <Link to="https://github.com/pirnataly" className="link about__link">
-            The author.
+            The author
           </Link>
           <Link to="/" className="link">
             Go Home.

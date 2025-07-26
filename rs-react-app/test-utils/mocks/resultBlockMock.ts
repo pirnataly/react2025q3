@@ -1,4 +1,4 @@
-import { Photo, Photos, SuccessFetchAnswer } from '../../interfaces/types';
+import { Photo, Photos, SuccessFetchAnswer } from '../../src/interfaces/types';
 
 export const mockPhotos: Photo[] = [
   {

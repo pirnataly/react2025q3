@@ -8,14 +8,15 @@ import {
 } from '../test-utils/mocks/localStorage';
 import { mockSuccessConfig } from '../test-utils/mocks/resultBlockMock';
 import * as fetchModule from './service/request';
-import { renderApp } from '../test-utils/renderApp';
+import RouterComponent from './service/router/RouterComponent';
+import { renderWithRouter } from '../test-utils/renderWithRouter';
 
 windowClear();
 
 describe('Integration tests ', () => {
   it(' Handles search term from localStorage on initial load', () => {
     localStorageMock.setItem('text', 'cats');
-    renderApp();
+    renderWithRouter(RouterComponent);
     const input = screen.getByPlaceholderText('Введите текст');
     expect(input).toHaveValue('cats');
   });
@@ -25,7 +26,7 @@ describe('Integration tests ', () => {
       .spyOn(fetchModule, 'default')
       .mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'nature');
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(fetchSpy).toHaveBeenCalledWith('nature');
     });
@@ -38,7 +39,7 @@ describe('API Integration tests ', () => {
       .spyOn(fetchModule, 'default')
       .mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'flowers');
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(fetchMock).toHaveBeenCalledWith('flowers');
     });
@@ -47,7 +48,7 @@ describe('API Integration tests ', () => {
   it('Handles successful API responses', async () => {
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'sky');
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(screen.getByText(/sky/i)).toBeInTheDocument();
     });
@@ -58,7 +59,7 @@ describe('API Integration tests ', () => {
       '500 — Non-successful response'
     );
     window.localStorage.setItem('text', 'fail');
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
     });
@@ -69,7 +70,7 @@ describe('State Management Test', () => {
   it('Updates component state based on API responses', async () => {
     window.localStorage.setItem('text', 'milk');
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(screen.getByText(/results were found/i)).toBeInTheDocument();
     });
@@ -78,7 +79,7 @@ describe('State Management Test', () => {
   it('Manages search term state correctly', async () => {
     vi.spyOn(fetchModule, 'default').mockResolvedValue(mockSuccessConfig);
     window.localStorage.setItem('text', 'new-term');
-    renderApp();
+    renderWithRouter(RouterComponent);
     await waitFor(() => {
       expect(screen.getByDisplayValue('new-term')).toBeInTheDocument();
     });
@@ -87,7 +88,7 @@ describe('State Management Test', () => {
 
 describe('User Interaction Tests', () => {
   it('should trim whitespace from search input before saving', () => {
-    renderApp();
+    renderWithRouter(RouterComponent);
     const input = screen.getByPlaceholderText('Введите текст');
     fireEvent.change(input, { target: { value: '   react test   ' } });
     fireEvent.click(screen.getByText('Search'));
