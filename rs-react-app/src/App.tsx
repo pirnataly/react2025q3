@@ -5,15 +5,15 @@ import { ConfigType } from './interfaces/types';
 import { SearchBlock } from './components/search-block/SearchBlock';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import useFetching from './hooks/useFetching';
-
 import Modal from './components/ui/modal/Modal';
 import fetchResults from './service/request';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 export function App() {
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams({});
-  const [text, setText] = useState(localStorage.getItem('text') ?? '');
-  const [heading, setHeading] = useState(localStorage.getItem('text') ?? '');
+  const [text, setText] = useLocalStorage('text');
+  const [heading, setHeading] = useLocalStorage('text');
   const [config, setConfig] = useState<ConfigType>('null');
   const page = params.get('page') ? Number(params.get('page')) : 1;
   const id: string | null = params.get('detail') ? params.get('detail') : null;
@@ -33,7 +33,6 @@ export function App() {
   );
 
   useEffect(() => {
-    console.log('useEf');
     if (typeof fetchData === 'function') {
       fetchData(page);
     }
@@ -53,18 +52,14 @@ export function App() {
   const setLocalStorage = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      if (text) {
-        localStorage.setItem('text', text.trim());
-      } else {
-        localStorage.removeItem('text');
-      }
+      setText(text);
       setHeading(localStorage.getItem('text') ?? '');
       navigate('/', { state: page });
       if (params.has('page')) {
         params.delete('page');
       }
     },
-    [text, setHeading, navigate, page, params]
+    [text, setHeading, navigate, page, params, setText]
   );
   {
     return (

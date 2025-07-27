@@ -32,16 +32,23 @@ export default function ModalContent({ id }: ModalComponent) {
   return isPhotoLoading ? (
     <Loader />
   ) : (
-    <div className={classes.modalContent}>
+    <div data-test-id={'modal-content'} className={classes.modalContent}>
       {errorMessage ? (
         <h1 className={classes.errorMessage}>{errorMessage}</h1>
       ) : (
         <>
-          <img src={getUrl()} alt={`${id}`} className={classes.modalImage} />
+          <img
+            src={
+              getUrl() ??
+              'https://live.staticflickr.com/65535/54650369805_293c7be4a1_b.jpg'
+            }
+            alt={`${id ?? 'This is no photo'}`}
+            className={classes.modalImage}
+          />
 
           <p
             className={`${classes.moduleDescription} ${classes.moduleHeading}`}
-          >{`Title: ${modalData?.title._content}`}</p>
+          >{`Title: ${modalData?.title._content ?? "Photo doesn't exist"}`}</p>
           <p className={classes.moduleDescription}>
             date: {modalData?.dates.taken}
           </p>

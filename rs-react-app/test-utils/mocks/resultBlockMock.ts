@@ -46,7 +46,7 @@ export const mockPhotos: Photo[] = [
   },
 ];
 
-const mockPhotosData: Photos = {
+export const mockPhotosData: Photos = {
   page: 1,
   pages: 10,
   perpage: 10,
@@ -57,6 +57,16 @@ const mockPhotosData: Photos = {
 export const mockSuccessConfig: SuccessFetchAnswer = {
   photos: mockPhotosData,
   stat: 'ok',
+};
+
+export const mockPhotoById = {
+  id: '1',
+  title: { _content: 'Mock title' },
+  owner: { realname: 'Mock author' },
+  secret: 'abc',
+  server: '123',
+  views: '10',
+  dates: { taken: '2022-01-01' },
 };
 
 export const mockChangePage = vi.fn();

@@ -1,7 +1,7 @@
 import { SuccessFetchAnswer } from '../interfaces/types';
 
 let counter = 0;
-console.log(counter);
+
 export default async function fetchResults(
   inputText: string | null,
   page = 1

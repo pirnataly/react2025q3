@@ -1,8 +1,8 @@
 import './ResultBlock.css';
 import { Photo, ResultProps } from '../../interfaces/types';
 import { Cards } from '../cards/Cards';
-import Pagination from '../ui/Pagination';
 import Loader from '../ui/loader/Loader';
+import Pagination from '../ui/pagination/Pagination';
 
 function ResultBlock({
   changePage,
@@ -55,9 +55,6 @@ function ResultBlock({
       >{`Something went wrong. Mistake:${resultFromRequest}`}</div>
     );
   }
-
-  // if (resultFromRequest === 'bad') {
-  //   return <div className={nameOfClass}></div>;
   if (isPhotoLoading) {
     return <Loader />;
   } else {

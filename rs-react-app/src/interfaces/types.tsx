@@ -15,7 +15,7 @@ export type AppProps = {
   handleChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setLocalStorage: (e: React.FormEvent) => void;
 };
-// Pick<AppState, 'config'> &
+
 export type ResultProps = {
   changePage: (page: number) => void;
   page: number;

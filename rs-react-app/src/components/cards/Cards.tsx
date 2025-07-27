@@ -8,7 +8,6 @@ export function Cards({
   setSearchParams,
   showModal,
 }: CardProps) {
-  console.log(params.get('detail'));
   if (params.get('detail')) {
     params.delete('detail');
   }

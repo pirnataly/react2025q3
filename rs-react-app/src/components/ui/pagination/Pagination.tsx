@@ -1,4 +1,4 @@
-import { PaginationType } from '../../interfaces/types';
+import { PaginationType } from '../../../interfaces/types';
 import { useState } from 'react';
 import {
   getFrom,
@@ -6,7 +6,7 @@ import {
   getNextPagesArray,
   getPagesArray,
   getPrevPagesArray,
-} from '../../utils/utils';
+} from '../../../utils/utils';
 import classes from './Pagination.module.css';
 
 export default function Pagination({
