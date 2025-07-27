@@ -25,7 +25,7 @@ describe('main.tsx', () => {
   });
 
   it('logs error when root element is missing', () => {
-    document.body.innerHTML = ''; // удалить #root
+    document.body.innerHTML = '';
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
     mainModule.renderApp();
     expect(consoleSpy).toHaveBeenCalledWith('Root element not found');

@@ -4,11 +4,19 @@
   box-sizing: border-box;
 }
 
+a {
+  text-decoration: none;
+}
+
 #root {
   max-width: 1200px;
   width: 100%;
   min-width: 320px;
   margin: 0 auto;
+}
+
+.lock {
+  overflow: hidden;
 }
 
 .app {
@@ -23,4 +31,24 @@
 
 .button {
   padding: 8px 10px;
+}
+
+.link {
+  color: #8dcfec;
+}
+
+.app__link {
+  margin-bottom: 20px;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.overlay_hidden {
+  visibility: hidden;
 }

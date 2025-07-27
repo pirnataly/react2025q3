@@ -1,80 +1,115 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import SearchBlock from '../components/search-block/SearchBlock';
-import ResultBlock from '../components/result-block/ResultBlock';
-import { AppState } from '../interfaces/types';
-import fetchResults from '../service/request';
+import ResultBlock from './components/result-block/ResultBlock';
+import { ConfigType } from './interfaces/types';
+import { SearchBlock } from './components/search-block/SearchBlock';
+import { Link, useNavigate, useSearchParams } from 'react-router';
+import useFetching from './hooks/useFetching';
+import Modal from './components/ui/modal/Modal';
+import fetchResults from './service/request';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
-class App extends React.Component<unknown, AppState> {
-  public constructor(props: unknown) {
-    super(props);
-    this.state = {
-      text: localStorage.getItem('text') ?? '',
-      heading: localStorage.getItem('text') ?? '',
-      config: null,
-      crash: false,
-    };
-    this.setLocalStorage = this.setLocalStorage.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.handleCrash = this.handleCrash.bind(this);
-  }
+export function App() {
+  const navigate = useNavigate();
+  const [params, setSearchParams] = useSearchParams({});
+  const [text, setText] = useLocalStorage('text');
+  const [heading, setHeading] = useState(localStorage.getItem('text') ?? '');
+  const [config, setConfig] = useState<ConfigType>('null');
+  const page = params.get('page') ? Number(params.get('page')) : 1;
+  const id: string | null = params.get('detail') ? params.get('detail') : null;
+  const [modal, setModal] = useState(!!id);
 
-  handleCrash = () => {
-    this.setState({ crash: true });
+  useEffect(() => {
+    document.body.className = modal ? 'lock' : 'body';
+  }, [modal]);
+
+  const [fetchData, isPhotosLoading, errorMessage] = useFetching(
+    useCallback(async (pageNumber: number) => {
+      const fetchArg = localStorage.getItem('text') || 'photo';
+      setConfig(null);
+      const data = await fetchResults(fetchArg, pageNumber);
+      setConfig(data ?? null);
+    }, [])
+  );
+
+  useEffect(() => {
+    if (typeof fetchData === 'function') {
+      fetchData(page);
+    }
+  }, [heading, page, fetchData]);
+
+  const handleChangePage = (p: number) => {
+    setSearchParams({ page: String(p) });
   };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData() {
-    const fetchArg = localStorage.getItem('text') || 'photo';
-    this.setState({
-      config: null,
-    });
-
-    fetchResults(fetchArg).then((data) => {
-      this.setState({
-        config: data ?? null,
-      });
-    });
-  }
-
-  handleChangeInput: React.ChangeEventHandler<HTMLInputElement> = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  function handleChangeInput(e: React.ChangeEvent<HTMLInputElement>): void {
     if (e.target) {
       const { value } = e.target;
-      this.setState({
-        text: String(value),
-      });
+      setText(String(value));
     }
-  };
-
-  setLocalStorage(): void {
-    if (this.state.text) {
-      localStorage.setItem('text', this.state.text.trim());
-    } else {
-      localStorage.removeItem('text');
-    }
-    this.fetchData();
   }
 
-  render() {
-    if (this.state.crash) {
-      throw new Error('Ошибка при рендере компонента');
-    }
+  const setLocalStorage = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (text) {
+        localStorage.setItem('text', text.trim());
+      } else {
+        localStorage.removeItem('text');
+      }
+      setHeading(localStorage.getItem('text') ?? '');
+      navigate('/', { state: page });
+      if (params.has('page')) {
+        params.delete('page');
+      }
+    },
+    [text, navigate, page, params]
+  );
+  {
     return (
       <div className="app">
+        <div
+          role="button"
+          tabIndex={0}
+          aria-label="overlay"
+          className={modal ? 'overlay' : 'overlay overlay_hidden'}
+          onClick={() => {
+            setModal(false);
+            if (params.has('detail')) {
+              params.delete('detail');
+            }
+            setSearchParams(new URLSearchParams(params));
+          }}
+          onKeyDown={() => {
+            setModal(false);
+          }}
+        ></div>
+        <Link to={'about'} className={'link app__link'}>
+          About
+        </Link>
         <SearchBlock
-          text={this.state.text}
-          setLocalStorage={this.setLocalStorage}
-          handleChangeInput={this.handleChangeInput}
+          text={text}
+          setLocalStorage={setLocalStorage}
+          handleChangeInput={handleChangeInput}
         />
-        <ResultBlock {...this.state} />
-        <button type={'button'} className={'button'} onClick={this.handleCrash}>
-          {'ErrorBoundary'}
-        </button>
+
+        <ResultBlock
+          page={page}
+          changePage={handleChangePage}
+          result={config}
+          isPhotoLoading={isPhotosLoading}
+          showModal={setModal}
+          setSearchParams={setSearchParams}
+          params={params}
+          errorMessage={errorMessage}
+        />
+        <Modal
+          visible={modal}
+          setVisible={setModal}
+          setSearchParams={setSearchParams}
+          params={params}
+          id={id}
+        />
       </div>
     );
   }

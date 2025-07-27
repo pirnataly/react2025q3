@@ -1,0 +1,33 @@
+.modal {
+  position: fixed;
+  flex-direction: column;
+  place-content: center;
+  width: 50vw;
+  top: 0;
+  bottom: 0;
+  right: -50vw;
+  background-color: rgba(256, 256, 256, 0.9);
+  transition: right 0.3s ease-out;
+}
+
+.modal_active {
+  display: flex;
+  right: 0;
+}
+
+.closeButton {
+  position: absolute;
+  font-size: 18px;
+  top: 10px;
+  right: 10px;
+  padding: 5px 15px;
+  border: none;
+  letter-spacing: 1px;
+  background-color: lightblue;
+  border-radius: 6px;
+}
+@media (hover: hover) {
+  .closeButton:hover {
+    cursor: pointer;
+  }
+}

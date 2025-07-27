@@ -1,0 +1,41 @@
+.buttonContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.buttonContainer_none {
+  display: none;
+}
+
+.controlButton {
+  padding-left: 20px;
+  padding-right: 20px;
+  border: 1px solid #ddd;
+  background: none;
+  height: 40px;
+}
+
+.pageButton {
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  background: none;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.pageCurrent {
+  border: 3px solid gray;
+  font-weight: bold;
+}
+
+@media (hover: hover) {
+  .pageButton:hover,
+  .controlButton:hover {
+    background-color: lightgrey;
+    color: white;
+    cursor: pointer;
+  }
+}

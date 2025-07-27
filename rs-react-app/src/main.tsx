@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+
 import { ErrorBoundary } from './error-boundary/ErrorBoundary';
-import Fallback from './error-boundary/Fallback';
+import { Fallback } from './error-boundary/Fallback';
+import { BrowserRouter } from 'react-router';
+import RouterComponent from './service/router/RouterComponent';
 
 export function renderApp(): void {
   const rootElement = document.getElementById('root');
@@ -12,7 +14,9 @@ export function renderApp(): void {
     root.render(
       <React.StrictMode>
         <ErrorBoundary fallback={<Fallback />}>
-          <App />
+          <BrowserRouter>
+            <RouterComponent />
+          </BrowserRouter>
         </ErrorBoundary>
       </React.StrictMode>
     );

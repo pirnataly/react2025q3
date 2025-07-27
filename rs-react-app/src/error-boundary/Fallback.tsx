@@ -1,20 +1,16 @@
-import * as React from 'react';
 import './Fallback.css';
+import '../components/not-found/NotFound.css';
 
-export default class Fallback extends React.Component<
-  unknown,
-  React.JSX.Element
-> {
-  public constructor(props: unknown) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <section className={'fallback'}>
-        <h2 className={'fallback__heading'}>{'Mistake from Error Boundary'}</h2>
-        <p>Please reload the window</p>
-      </section>
-    );
-  }
+export function Fallback() {
+  return (
+    <section className={'fallback'}>
+      <h2 className={'fallback__heading'}>{`Mistake from Error Boundary`}</h2>
+      <p className={'fallback__paragraph'}>
+        Please reload the window or click the link
+      </p>
+      <a href={'/'} className={'link not-found__link'}>
+        Go Home
+      </a>
+    </section>
+  );
 }
