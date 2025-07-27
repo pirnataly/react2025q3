@@ -13,7 +13,7 @@ export function App() {
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams({});
   const [text, setText] = useLocalStorage('text');
-  const [heading, setHeading] = useLocalStorage('text');
+  const [heading, setHeading] = useState(localStorage.getItem('text') ?? '');
   const [config, setConfig] = useState<ConfigType>('null');
   const page = params.get('page') ? Number(params.get('page')) : 1;
   const id: string | null = params.get('detail') ? params.get('detail') : null;
@@ -52,14 +52,18 @@ export function App() {
   const setLocalStorage = useCallback(
     (e: React.FormEvent) => {
       e.preventDefault();
-      setText(text);
+      if (text) {
+        localStorage.setItem('text', text.trim());
+      } else {
+        localStorage.removeItem('text');
+      }
       setHeading(localStorage.getItem('text') ?? '');
       navigate('/', { state: page });
       if (params.has('page')) {
         params.delete('page');
       }
     },
-    [text, setHeading, navigate, page, params, setText]
+    [text, navigate, page, params]
   );
   {
     return (
