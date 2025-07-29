@@ -94,6 +94,7 @@ describe('User Interaction Tests', () => {
     fireEvent.click(screen.getByText('Search'));
     expect(localStorage.getItem('text')).toBe('react test');
   });
+
   it('updates URL search params when page is changed', async () => {
     renderWithRouter(RouterComponent);
     const pageButton = await screen.findByRole('button', { name: /2/i });

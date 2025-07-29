@@ -1,5 +1,7 @@
 import { CardProps } from '../../interfaces/types';
 import './Cards.css';
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../features/selectedItemsSlice';
 
 export function Cards({
   photos,
@@ -12,6 +14,8 @@ export function Cards({
     params.delete('detail');
   }
   const currentSearch = Array.from(params.entries());
+  const dispatch = useDispatch();
+
   return (
     <div className="cards-container">
       {photos.map((photoCard) => (
@@ -22,6 +26,7 @@ export function Cards({
             showModal(true);
             currentSearch.push(['detail', photoCard.id]);
             setSearchParams(new URLSearchParams(currentSearch));
+            dispatch(addItem(photoCard));
           }}
         >
           <div>

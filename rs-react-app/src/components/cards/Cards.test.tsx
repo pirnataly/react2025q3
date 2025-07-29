@@ -10,17 +10,21 @@ import {
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
 import { Cards } from './Cards';
+import { Provider } from 'react-redux';
+import { store } from '../../app/store';
 
 describe('Rendering test for Cards', () => {
   it('Renders correct number of items when photos is provided', () => {
     render(
-      <Cards
-        headingText={null}
-        photos={mockPhotos}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <Cards
+          headingText={null}
+          photos={mockPhotos}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
     const cards = screen.getAllByRole('img');
     expect(cards.length).toBe(mockPhotos.length);
@@ -28,13 +32,15 @@ describe('Rendering test for Cards', () => {
 
   it('Renders correct card-description', () => {
     render(
-      <Cards
-        headingText={null}
-        photos={mockPhotos}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <Cards
+          headingText={null}
+          photos={mockPhotos}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
 
     for (const photo of mockSuccessConfig.photos.photo) {

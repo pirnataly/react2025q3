@@ -4,6 +4,8 @@ import { vi } from 'vitest';
 import { mockSuccessConfig } from '../../../../test-utils/mocks/resultBlockMock';
 import Pagination from './Pagination';
 import * as utils from '../../../utils/utils';
+import { store } from '../../../app/store';
+import { Provider } from 'react-redux';
 
 vi.mock('../ui/loader/Loader', () => ({
   default: () => <div data-testid="loader">Loading...</div>,
@@ -47,16 +49,18 @@ describe('Pagination via ResultBlock', () => {
 
   it('рендерит Pagination, когда есть результат', () => {
     render(
-      <ResultBlock
-        changePage={mockChangePage}
-        result={mockSuccessConfig}
-        page={1}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        isPhotoLoading={false}
-        params={new URLSearchParams()}
-        errorMessage={''}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          changePage={mockChangePage}
+          result={mockSuccessConfig}
+          page={1}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          isPhotoLoading={false}
+          params={new URLSearchParams()}
+          errorMessage={''}
+        />
+      </Provider>
     );
 
     expect(screen.getByText(/results were found/i)).toBeInTheDocument();
@@ -67,16 +71,18 @@ describe('Pagination via ResultBlock', () => {
 
   it('вызывает changePage при клике на номер страницы', () => {
     render(
-      <ResultBlock
-        changePage={mockChangePage}
-        result={mockSuccessConfig}
-        page={1}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        isPhotoLoading={false}
-        params={new URLSearchParams()}
-        errorMessage={''}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          changePage={mockChangePage}
+          result={mockSuccessConfig}
+          page={1}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          isPhotoLoading={false}
+          params={new URLSearchParams()}
+          errorMessage={''}
+        />
+      </Provider>
     );
 
     const pageButton = screen.getByRole('button', { name: '2' });
