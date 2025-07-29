@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import './App.css';
-import ResultBlock from './components/result-block/ResultBlock';
-import { ConfigType } from './interfaces/types';
-import { SearchBlock } from './components/search-block/SearchBlock';
+import ResultBlock from './../components/result-block/ResultBlock';
+import { ConfigType } from '../interfaces/types';
+import { SearchBlock } from '../components/search-block/SearchBlock';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import useFetching from './hooks/useFetching';
-import Modal from './components/ui/modal/Modal';
-import fetchResults from './service/request';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import useFetching from './../hooks/useFetching';
+import Modal from './../components/ui/modal/Modal';
+import fetchResults from './../service/request';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export function App() {
   const navigate = useNavigate();

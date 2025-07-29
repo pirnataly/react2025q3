@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import App from '../../App';
+import App from '../../../src/app/App';
 import NotFound from '../../components/not-found/NotFound';
 import About from '../../pages/About';
 
