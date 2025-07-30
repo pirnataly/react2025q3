@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type Item = {
+export type Item = {
   id: string;
   url_l: string;
   title: string;
@@ -24,9 +24,9 @@ const items = createSlice({
     ) => {
       state.selectedItems.push({ id, title, url_l });
     },
-    removeItem: (state, action: PayloadAction<string>) => {
+    removeItem: (state, { payload: { id } }: PayloadAction<Item>) => {
       state.selectedItems = state.selectedItems.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== id
       );
     },
     clearItems: (state) => {

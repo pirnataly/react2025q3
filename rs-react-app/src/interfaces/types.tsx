@@ -89,3 +89,8 @@ export type PhotoByIdType = {
   title: { _content: string };
   views: string;
 };
+
+export type CardType = Pick<
+  CardProps,
+  'showModal' | 'setSearchParams' | 'headingText'
+> & { currentSearch: [string, string][]; photoCard: Photo };
