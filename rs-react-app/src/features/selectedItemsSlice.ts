@@ -6,13 +6,9 @@ export type Item = {
   title: string;
 };
 
-type selectedItemsState = {
-  selectedItems: Item[];
-};
+type selectedItemsState = Item[];
 
-const initialState: selectedItemsState = {
-  selectedItems: [],
-};
+const initialState: selectedItemsState = [];
 
 const items = createSlice({
   name: 'selectedItems',
@@ -22,15 +18,13 @@ const items = createSlice({
       state,
       { payload: { id, title, url_l } }: PayloadAction<Item>
     ) => {
-      state.selectedItems.push({ id, title, url_l });
+      state.push({ id, title, url_l });
     },
     removeItem: (state, { payload: { id } }: PayloadAction<Item>) => {
-      state.selectedItems = state.selectedItems.filter(
-        (item) => item.id !== id
-      );
+      return state.filter((item) => item.id !== id);
     },
-    clearItems: (state) => {
-      state.selectedItems = [];
+    clearItems: () => {
+      return [];
     },
   },
 });

@@ -41,6 +41,12 @@
   accent-color: #8dcfec;
 }
 
+@media (hover: hover) {
+  .card-checkbox:hover {
+    cursor: pointer;
+  }
+}
+
 .results-card__card-checkbox {
   position: absolute;
   top: 0;

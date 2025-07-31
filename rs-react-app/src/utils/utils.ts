@@ -1,3 +1,5 @@
+import { Item } from '../features/selectedItemsSlice';
+
 export function getPagesArray(start: number, end: number) {
   const step = 1;
   return Array.from(
@@ -34,4 +36,10 @@ export function getNextPagesArray(currentPages: number[], total: number) {
     arr = currentPages.map((item) => item + 20);
   }
   return arr;
+}
+
+export function getLayoutClass(items: Item[]) {
+  return items.length
+    ? 'layout app__layout'
+    : 'layout app__layout app__layout_none';
 }

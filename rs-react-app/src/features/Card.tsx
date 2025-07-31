@@ -3,7 +3,6 @@ import './Card.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, Item, removeItem } from './selectedItemsSlice';
 import { RootState } from '../app/store';
-import { useState } from 'react';
 
 export function Card({
   photoCard,
@@ -13,9 +12,8 @@ export function Card({
   headingText,
 }: CardType) {
   const dispatch = useDispatch();
-  const selector = useSelector((state: RootState) => state.selectedItems);
-  const [selected, setSelected] = useState(
-    !!selector.selectedItems.find((item: Item) => item.id === photoCard.id)
+  const selector = useSelector((state: RootState) =>
+    state.selectedItems.some((item: Item) => item.id === photoCard.id)
   );
 
   return (
@@ -43,15 +41,14 @@ export function Card({
         type="checkbox"
         data-test-id="checkbox"
         onChange={() => {
-          if (!selected) {
+          if (!selector) {
             dispatch(addItem(photoCard));
           } else {
             dispatch(removeItem(photoCard));
           }
-          setSelected(!selected);
         }}
         className="card-checkbox results-card__card-checkbox"
-        checked={selected}
+        checked={selector}
       ></input>
     </div>
   );

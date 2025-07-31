@@ -1,3 +1,9 @@
+:root {
+  --flyout-height: 50px;
+  --flyout-width: 20vw;
+  --flyout-height-hidden: -50px;
+}
+
 * {
   margin: 0;
   padding: 0;
