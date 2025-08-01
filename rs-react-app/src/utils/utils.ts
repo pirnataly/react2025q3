@@ -40,6 +40,21 @@ export function getNextPagesArray(currentPages: number[], total: number) {
 
 export function getLayoutClass(items: Item[]) {
   return items.length
-    ? 'layout app__layout'
-    : 'layout app__layout app__layout_none';
+    ? 'flyout app__flyout'
+    : 'flyout app__flyout app__flyout_none';
+}
+
+export function getEndOfAmount(length: number): string {
+  let result: string;
+  switch (length) {
+    case 0:
+      result = 'nothing is';
+      break;
+    case 1:
+      result = `${length} item is`;
+      break;
+    default:
+      result = `${length} items are`;
+  }
+  return result;
 }

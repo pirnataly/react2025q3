@@ -8,7 +8,7 @@ import useFetching from './../hooks/useFetching';
 import Modal from './../components/ui/modal/Modal';
 import fetchResults from './../service/request';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Layout } from '../features/Layout';
+import { Flyout } from '../features/Flyout';
 
 export function App() {
   const navigate = useNavigate();
@@ -111,7 +111,7 @@ export function App() {
           params={params}
           id={id}
         />
-        <Layout />
+        <Flyout />
       </div>
     );
   }

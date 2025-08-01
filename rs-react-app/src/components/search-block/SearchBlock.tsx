@@ -1,5 +1,6 @@
 import './SearchBlock.css';
 import { AppProps } from '../../interfaces/types';
+import { Button } from '../ui/button/Button';
 
 export function SearchBlock({
   text,
@@ -11,6 +12,7 @@ export function SearchBlock({
       className="search"
       onSubmit={(e) => {
         e.preventDefault();
+        setLocalStorage(e);
       }}
     >
       <input
@@ -20,9 +22,12 @@ export function SearchBlock({
         onChange={handleChangeInput}
         placeholder="Введите текст"
       />
-      <button className="search__button" onClick={setLocalStorage}>
-        Search
-      </button>
+
+      <Button
+        classname={`button search__button`}
+        text={'Search'}
+        type={'submit'}
+      />
     </form>
   );
 }

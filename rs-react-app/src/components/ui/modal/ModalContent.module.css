@@ -44,3 +44,13 @@
     cursor: pointer;
   }
 }
+
+@media (max-width: 768px) {
+  .moduleDescription {
+    font-size: 18px;
+  }
+
+  .moduleHeading {
+    font-size: 18px;
+  }
+}
