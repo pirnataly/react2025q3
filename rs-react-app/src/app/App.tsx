@@ -35,7 +35,7 @@ export function App() {
 
   useEffect(() => {
     if (typeof fetchData === 'function') {
-      fetchData(page);
+      void fetchData(page);
     }
   }, [heading, page, fetchData]);
 
@@ -93,7 +93,6 @@ export function App() {
           setLocalStorage={setLocalStorage}
           handleChangeInput={handleChangeInput}
         />
-
         <ResultBlock
           page={page}
           changePage={handleChangePage}

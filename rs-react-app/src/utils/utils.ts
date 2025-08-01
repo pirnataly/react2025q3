@@ -58,3 +58,29 @@ export function getEndOfAmount(length: number): string {
   }
   return result;
 }
+
+export function getFileName(length: number) {
+  return length === 1 ? `${length}_item` : `${length}_items`;
+}
+
+export function createCSV(headers: string[], rows: string[][]): string {
+  const headerRow = headers.map((header) => `"${header}"`).join(',');
+  const dataRows = rows.map((row) => {
+    return row
+      .map((cell) => {
+        const cellValue = String(cell).replace(/"/g, '""');
+        return `"${cellValue}"`;
+      })
+      .join(',');
+  });
+  return [headerRow, ...dataRows].join('\n');
+}
+
+export function startFileDownload(url: string, fileName: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

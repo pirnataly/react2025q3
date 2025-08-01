@@ -3,7 +3,7 @@ import '../app/App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../app/store';
 import { getEndOfAmount, getLayoutClass } from '../utils/utils';
-import { clearItems } from './selectedItemsSlice';
+import { clearItems, downloadItems } from './selectedItemsSlice';
 import { Button } from '../components/ui/button/Button';
 
 export function Flyout() {
@@ -23,7 +23,11 @@ export function Flyout() {
           dispatch(clearItems());
         }}
       />
-      <Button classname="button flyout-button" text="Download" />
+      <Button
+        classname="button flyout-button"
+        text="Download"
+        onclickFunction={() => dispatch(downloadItems())}
+      />
     </aside>
   );
 }
