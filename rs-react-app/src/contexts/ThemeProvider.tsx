@@ -6,8 +6,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const getInitialTheme = (): Theme => {
     const saved = localStorage.getItem('theme') as Theme | null;
     if (saved === 'light' || saved === 'dark') return saved;
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
+    return matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light';
   };
