@@ -11,6 +11,10 @@
   margin: 10px;
 }
 
+[data-theme='dark'] .results-card {
+  background-color: #fc93ad;
+}
+
 @media (hover: hover) {
   .results-card:not(.card-checkbox):hover {
     cursor: pointer;
@@ -35,10 +39,18 @@
   overflow: hidden;
 }
 
+[data-theme='dark'] .card-description {
+  color: #fefdfb;
+}
+
 .card-checkbox {
   width: 20px;
   height: 20px;
   accent-color: #8dcfec;
+}
+
+[data-theme='dark'] .card-checkbox {
+  accent-color: #fc93ad;
 }
 
 @media (hover: hover) {

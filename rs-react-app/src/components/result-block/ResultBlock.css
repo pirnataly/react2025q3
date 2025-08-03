@@ -10,6 +10,11 @@
   text-align: center;
 }
 
-.results-subheading {
+.results__subheading {
   margin-bottom: 20px;
+}
+
+[data-theme='dark'] .results__heading,
+[data-theme='dark'] .results__subheading {
+  color: #fefdfb;
 }

@@ -8,6 +8,11 @@
   animation: spin 1s linear infinite;
 }
 
+[data-theme='dark'] .spinner {
+  border-color: #fefdfb;
+  border-top-color: #999999;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0);

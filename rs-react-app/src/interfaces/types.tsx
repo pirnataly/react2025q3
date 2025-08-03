@@ -94,3 +94,10 @@ export type CardType = Pick<
   CardProps,
   'showModal' | 'setSearchParams' | 'headingText'
 > & { currentSearch: [string, string][]; photoCard: Photo };
+
+export type Theme = 'light' | 'dark';
+
+export type ThemeContextType = {
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+};

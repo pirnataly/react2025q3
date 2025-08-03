@@ -1,4 +1,5 @@
 import { Item } from '../features/selectedItemsSlice';
+import { Theme } from '../interfaces/types';
 
 export function getPagesArray(start: number, end: number) {
   const step = 1;
@@ -83,4 +84,8 @@ export function startFileDownload(url: string, fileName: string): void {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+}
+
+export function getTheme(theme: Theme) {
+  return theme === 'light' ? 'dark' : 'light';
 }

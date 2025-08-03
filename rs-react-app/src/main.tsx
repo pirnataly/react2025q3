@@ -1,12 +1,12 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-
+import React from 'react';
 import { ErrorBoundary } from './error-boundary/ErrorBoundary';
 import { Fallback } from './error-boundary/Fallback';
-import { BrowserRouter } from 'react-router';
-import RouterComponent from './service/router/RouterComponent';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import RouterComponent from './service/router/RouterComponent';
+import { BrowserRouter } from 'react-router';
+import { ThemeProvider } from './contexts/ThemeProvider';
 
 export function renderApp(): void {
   const rootElement = document.getElementById('root');
@@ -16,9 +16,11 @@ export function renderApp(): void {
       <React.StrictMode>
         <ErrorBoundary fallback={<Fallback />}>
           <BrowserRouter>
-            <Provider store={store}>
-              <RouterComponent />
-            </Provider>
+            <ThemeProvider>
+              <Provider store={store}>
+                <RouterComponent />
+              </Provider>
+            </ThemeProvider>
           </BrowserRouter>
         </ErrorBoundary>
       </React.StrictMode>

@@ -10,6 +10,14 @@
   box-sizing: border-box;
 }
 
+[data-theme='dark'] {
+  background-color: #1f1f1f;
+}
+
+[data-theme='dark'] .button {
+  background-color: #fc93ad;
+}
+
 a {
   text-decoration: none;
 }
@@ -35,6 +43,14 @@ a {
   font-size: 20px;
 }
 
+.header {
+  display: flex;
+  width: 100%;
+  margin: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .button {
   padding: 6px 16px;
   border: none;
@@ -44,10 +60,18 @@ a {
   white-space: nowrap;
 }
 
+.button-theme {
+  font-size: 12px;
+}
+
 @media (hover: hover) {
   .button:hover {
     cursor: pointer;
     background-color: #8dcfec;
+  }
+
+  [data-theme='dark'] .button:hover {
+    background-color: #fc8ba7;
   }
 }
 
@@ -55,8 +79,8 @@ a {
   color: #8dcfec;
 }
 
-.app__link {
-  margin-bottom: 20px;
+[data-theme='dark'] .link {
+  color: #fc93ad;
 }
 
 .overlay {

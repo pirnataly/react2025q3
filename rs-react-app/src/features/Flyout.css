@@ -1,13 +1,18 @@
 .flyout {
   width: var(--flyout-width);
   height: 50px;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(240, 248, 255, 0.8);
   border-radius: 6px;
   border: 1px dotted lightblue;
   min-width: 320px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+}
+
+[data-theme='dark'] .flyout {
+  background-color: rgba(254, 214, 224, 0.8);
+  border-color: rgba(255, 139, 167);
 }
 
 .app__flyout {
