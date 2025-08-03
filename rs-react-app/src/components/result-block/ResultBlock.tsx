@@ -35,8 +35,8 @@ function ResultBlock({
   ) {
     return (
       <>
-        <h1 className="results-heading">This page does not exist</h1>
-        <h3 className="results-subheading">
+        <h1 className="results__heading">This page does not exist</h1>
+        <h3 className="results__subheading">
           Choose another page or change text of your request
         </h3>
         <Pagination

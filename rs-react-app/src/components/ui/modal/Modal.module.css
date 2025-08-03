@@ -10,6 +10,10 @@
   transition: right 0.3s ease-out;
 }
 
+[data-theme='dark'] .modal {
+  background-color: rgba(31, 31, 31, 0.9);
+}
+
 .modal_active {
   display: flex;
   right: 0;
@@ -20,14 +24,22 @@
   font-size: 18px;
   top: 10px;
   right: 10px;
-  padding: 5px 15px;
-  border: none;
   letter-spacing: 1px;
-  background-color: lightblue;
-  border-radius: 6px;
 }
-@media (hover: hover) {
-  .closeButton:hover {
-    cursor: pointer;
+
+@media (max-width: 768px) {
+  .modal {
+    width: 100vw;
+    right: -100vw;
+  }
+
+  .modal_active {
+    right: 0;
+  }
+}
+@media (max-width: 360px) {
+  .closeButton {
+    top: 0;
+    font-size: 12px;
   }
 }

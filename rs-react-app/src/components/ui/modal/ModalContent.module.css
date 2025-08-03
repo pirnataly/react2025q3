@@ -17,6 +17,10 @@
   border-radius: 6px;
 }
 
+[data-theme='dark'] .modalContent {
+  background-color: #fc93ad;
+}
+
 .modalImage {
   width: 100%;
   height: 80%;
@@ -38,9 +42,24 @@
   font-size: 32px;
 }
 
+[data-theme='dark'] .moduleHeading,
+[data-theme='dark'] .moduleDescription {
+  color: #fefdfb;
+}
+
 @media (hover: hover) {
   .closeButton:hover {
     transform: scale(1.05);
     cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .moduleDescription {
+    font-size: 18px;
+  }
+
+  .moduleHeading {
+    font-size: 20px;
   }
 }

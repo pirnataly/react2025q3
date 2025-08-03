@@ -2,14 +2,14 @@ import { screen, waitFor, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import '@testing-library/dom';
+import { mockSuccessConfig } from '../../test-utils/mocks/resultBlockMock';
+import * as fetchModule from './../service/request';
+import RouterComponent from './../service/router/RouterComponent';
+import { renderWithRouter } from '../../test-utils/renderWithRouter';
 import {
-  windowClear,
   localStorageMock,
-} from '../test-utils/mocks/localStorage';
-import { mockSuccessConfig } from '../test-utils/mocks/resultBlockMock';
-import * as fetchModule from './service/request';
-import RouterComponent from './service/router/RouterComponent';
-import { renderWithRouter } from '../test-utils/renderWithRouter';
+  windowClear,
+} from '../../test-utils/mocks/localStorage';
 
 windowClear();
 
@@ -94,6 +94,7 @@ describe('User Interaction Tests', () => {
     fireEvent.click(screen.getByText('Search'));
     expect(localStorage.getItem('text')).toBe('react test');
   });
+
   it('updates URL search params when page is changed', async () => {
     renderWithRouter(RouterComponent);
     const pageButton = await screen.findByRole('button', { name: /2/i });

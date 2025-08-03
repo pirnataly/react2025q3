@@ -16,6 +16,15 @@
   height: 40px;
 }
 
+[data-theme='dark'] .controlButton {
+  color: #fefdfb;
+}
+
+[data-theme='dark'] .controlButton:disabled {
+  cursor: auto;
+  color: rgba(254, 253, 251, 0.5);
+}
+
 .pageButton {
   text-decoration: none;
   width: 40px;
@@ -24,6 +33,11 @@
   background: none;
   transition: background-color 0.3s ease;
   text-align: center;
+}
+
+[data-theme='dark'] .pageButton {
+  background-color: #1f1f1f;
+  color: #fefdfb;
 }
 
 .pageCurrent {
@@ -37,5 +51,11 @@
     background-color: lightgrey;
     color: white;
     cursor: pointer;
+  }
+
+  [data-theme='dark'] .pageButton:hover,
+  [data-theme='dark'] .controlButton:hover {
+    background-color: darkgray;
+    color: black;
   }
 }

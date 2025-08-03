@@ -1,19 +1,24 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import './App.css';
-import ResultBlock from './components/result-block/ResultBlock';
-import { ConfigType } from './interfaces/types';
-import { SearchBlock } from './components/search-block/SearchBlock';
+import ResultBlock from './../components/result-block/ResultBlock';
+import { ConfigType } from '../interfaces/types';
+import { SearchBlock } from '../components/search-block/SearchBlock';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import useFetching from './hooks/useFetching';
-import Modal from './components/ui/modal/Modal';
-import fetchResults from './service/request';
-import { useLocalStorage } from './hooks/useLocalStorage';
+import useFetching from './../hooks/useFetching';
+import Modal from './../components/ui/modal/Modal';
+import fetchResults from './../service/request';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { Flyout } from '../features/Flyout';
+import { Button } from '../components/ui/button/Button';
+import { ThemeContext } from '../contexts/ThemeContext';
+import { getTheme } from '../utils/utils';
 
 export function App() {
+  const { theme, setTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const [params, setSearchParams] = useSearchParams({});
   const [text, setText] = useLocalStorage('text');
-  const [heading, setHeading] = useState(localStorage.getItem('text') ?? '');
+  const [heading, setHeading] = useLocalStorage('text');
   const [config, setConfig] = useState<ConfigType>('null');
   const page = params.get('page') ? Number(params.get('page')) : 1;
   const id: string | null = params.get('detail') ? params.get('detail') : null;
@@ -34,7 +39,7 @@ export function App() {
 
   useEffect(() => {
     if (typeof fetchData === 'function') {
-      fetchData(page);
+      void fetchData(page);
     }
   }, [heading, page, fetchData]);
 
@@ -63,7 +68,7 @@ export function App() {
         params.delete('page');
       }
     },
-    [text, navigate, page, params]
+    [text, navigate, page, params, setHeading]
   );
   {
     return (
@@ -84,15 +89,24 @@ export function App() {
             setModal(false);
           }}
         ></div>
-        <Link to={'about'} className={'link app__link'}>
-          About
-        </Link>
+        <header className="header app__header">
+          <Link to={'about'} className={'link app__link'}>
+            About
+          </Link>
+          <Button
+            classname="button button-theme"
+            text={getTheme(theme) + ' theme'}
+            onclickFunction={() => {
+              setTheme(getTheme(theme));
+              localStorage.setItem('theme', getTheme(theme));
+            }}
+          />
+        </header>
         <SearchBlock
           text={text}
           setLocalStorage={setLocalStorage}
           handleChangeInput={handleChangeInput}
         />
-
         <ResultBlock
           page={page}
           changePage={handleChangePage}
@@ -110,6 +124,7 @@ export function App() {
           params={params}
           id={id}
         />
+        <Flyout />
       </div>
     );
   }

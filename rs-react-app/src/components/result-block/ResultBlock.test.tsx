@@ -13,6 +13,8 @@ import {
 
 import ResultBlock from './ResultBlock';
 import { SuccessFetchAnswer } from '../../interfaces/types';
+import { Provider } from 'react-redux';
+import { store } from '../../app/store';
 
 describe('Rendering tests for ResultBlock', () => {
   windowClear();
@@ -29,16 +31,18 @@ describe('Rendering tests for ResultBlock', () => {
 
     localStorage.setItem('text', 'nothing');
     render(
-      <ResultBlock
-        result={emptyConfig}
-        page={1}
-        changePage={mockChangePage}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        errorMessage={''}
-        isPhotoLoading={false}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          result={emptyConfig}
+          page={1}
+          changePage={mockChangePage}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          errorMessage={''}
+          isPhotoLoading={false}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
 
     expect(
@@ -50,16 +54,18 @@ describe('Rendering tests for ResultBlock', () => {
     localStorage.setItem('text', 'cats');
 
     render(
-      <ResultBlock
-        result={mockSuccessConfig}
-        page={1}
-        changePage={mockChangePage}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        errorMessage={''}
-        isPhotoLoading={false}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          result={mockSuccessConfig}
+          page={1}
+          changePage={mockChangePage}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          errorMessage={''}
+          isPhotoLoading={false}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
 
     const cards = screen.getAllByRole('img');
@@ -73,16 +79,18 @@ describe('Rendering tests for ResultBlock', () => {
 
   it('Shows loading state while fetching data', () => {
     const { container } = render(
-      <ResultBlock
-        result={null}
-        page={1}
-        changePage={mockChangePage}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        errorMessage={''}
-        isPhotoLoading={false}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          result={null}
+          page={1}
+          changePage={mockChangePage}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          errorMessage={''}
+          isPhotoLoading={false}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
     const spinner = container.querySelector('.spinner');
     expect(spinner).toBeInTheDocument();
@@ -94,16 +102,18 @@ describe('ResultBlock Data Display Tests', () => {
     localStorage.setItem('text', 'photos');
 
     render(
-      <ResultBlock
-        result={mockSuccessConfig}
-        page={1}
-        changePage={mockChangePage}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        errorMessage={''}
-        isPhotoLoading={false}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          result={mockSuccessConfig}
+          page={1}
+          changePage={mockChangePage}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          errorMessage={''}
+          isPhotoLoading={false}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
 
     for (const photo of mockSuccessConfig.photos.photo) {
@@ -117,16 +127,18 @@ describe('ResultBlock Error Handling Tests', () => {
     const errorMessage = '500 — Non-successful response';
 
     render(
-      <ResultBlock
-        result={errorMessage}
-        page={1}
-        changePage={mockChangePage}
-        showModal={mockShowModal}
-        setSearchParams={mockSetSearchParams}
-        errorMessage={''}
-        isPhotoLoading={false}
-        params={mockUrlSearchParams}
-      />
+      <Provider store={store}>
+        <ResultBlock
+          result={errorMessage}
+          page={1}
+          changePage={mockChangePage}
+          showModal={mockShowModal}
+          setSearchParams={mockSetSearchParams}
+          errorMessage={''}
+          isPhotoLoading={false}
+          params={mockUrlSearchParams}
+        />
+      </Provider>
     );
 
     expect(

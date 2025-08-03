@@ -1,3 +1,6 @@
+import { Item } from '../features/selectedItemsSlice';
+import { Theme } from '../interfaces/types';
+
 export function getPagesArray(start: number, end: number) {
   const step = 1;
   return Array.from(
@@ -34,4 +37,55 @@ export function getNextPagesArray(currentPages: number[], total: number) {
     arr = currentPages.map((item) => item + 20);
   }
   return arr;
+}
+
+export function getLayoutClass(items: Item[]) {
+  return items.length
+    ? 'flyout app__flyout'
+    : 'flyout app__flyout app__flyout_none';
+}
+
+export function getEndOfAmount(length: number): string {
+  let result: string;
+  switch (length) {
+    case 0:
+      result = 'nothing is';
+      break;
+    case 1:
+      result = `${length} item is`;
+      break;
+    default:
+      result = `${length} items are`;
+  }
+  return result;
+}
+
+export function getFileName(length: number) {
+  return length === 1 ? `${length}_item` : `${length}_items`;
+}
+
+export function createCSV(headers: string[], rows: string[][]): string {
+  const headerRow = headers.map((header) => `"${header}"`).join(',');
+  const dataRows = rows.map((row) => {
+    return row
+      .map((cell) => {
+        const cellValue = String(cell).replace(/"/g, '""');
+        return `"${cellValue}"`;
+      })
+      .join(',');
+  });
+  return [headerRow, ...dataRows].join('\n');
+}
+
+export function startFileDownload(url: string, fileName: string): void {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+export function getTheme(theme: Theme) {
+  return theme === 'light' ? 'dark' : 'light';
 }

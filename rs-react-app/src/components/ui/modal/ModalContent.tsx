@@ -29,9 +29,10 @@ export default function ModalContent({ id }: ModalComponent) {
     fetchPhotoById(id);
   }, [id, fetchPhotoById]);
 
-  return isPhotoLoading ? (
-    <Loader />
-  ) : (
+  if (isPhotoLoading) {
+    return <Loader />;
+  }
+  return (
     <div data-test-id={'modal-content'} className={classes.modalContent}>
       {errorMessage ? (
         <h1 className={classes.errorMessage}>{errorMessage}</h1>
