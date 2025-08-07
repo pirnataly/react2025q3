@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { URLSearchParamsInit } from 'react-router';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export type AppState = {
   text: string;
   heading: string;
-  config: null | SuccessFetchAnswer | 'bad' | string;
+  config: SuccessFetchAnswer | undefined;
   crash: boolean;
 };
-
-export type ConfigType = AppState['config'];
 
 export type AppProps = {
   text: string;
@@ -24,7 +24,8 @@ export type ResultProps = {
   showModal: (arg: boolean) => void;
   setSearchParams: (arg: URLSearchParamsInit) => void;
   params: URLSearchParams;
-  errorMessage: string;
+  errorMessage: FetchBaseQueryError | SerializedError | undefined;
+  headingText: string;
 };
 
 export type Photo = {
@@ -51,6 +52,8 @@ export type Photos = {
 };
 
 export type SuccessFetchAnswer = { photos: Photos; stat: 'ok' };
+
+export type SuccessFetchAnswerByID = { photo: PhotoByIdType; stat: 'ok' };
 
 export type CardProps = {
   photos: Photo[];
@@ -101,3 +104,10 @@ export type ThemeContextType = {
   theme: 'light' | 'dark';
   setTheme: (theme: 'light' | 'dark') => void;
 };
+
+export type FetchResultsArgs = {
+  inputText: string;
+  page?: number;
+};
+
+export type IdType = string | null;

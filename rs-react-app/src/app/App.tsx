@@ -1,17 +1,16 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import './App.css';
 import ResultBlock from './../components/result-block/ResultBlock';
-import { ConfigType } from '../interfaces/types';
 import { SearchBlock } from '../components/search-block/SearchBlock';
 import { Link, useNavigate, useSearchParams } from 'react-router';
-import useFetching from './../hooks/useFetching';
 import Modal from './../components/ui/modal/Modal';
-import fetchResults from './../service/request';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { Flyout } from '../features/Flyout';
 import { Button } from '../components/ui/button/Button';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { getTheme } from '../utils/utils';
+import { flickrApi, useFetchResultsQuery } from '../service/flickrApi';
+import { useDispatch } from 'react-redux';
 
 export function App() {
   const { theme, setTheme } = useContext(ThemeContext);
@@ -19,29 +18,38 @@ export function App() {
   const [params, setSearchParams] = useSearchParams({});
   const [text, setText] = useLocalStorage('text');
   const [heading, setHeading] = useLocalStorage('text');
-  const [config, setConfig] = useState<ConfigType>('null');
   const page = params.get('page') ? Number(params.get('page')) : 1;
   const id: string | null = params.get('detail') ? params.get('detail') : null;
   const [modal, setModal] = useState(!!id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.body.className = modal ? 'lock' : 'body';
   }, [modal]);
 
-  const [fetchData, isPhotosLoading, errorMessage] = useFetching(
-    useCallback(async (pageNumber: number) => {
-      const fetchArg = localStorage.getItem('text') || 'photo';
-      setConfig(null);
-      const data = await fetchResults(fetchArg, pageNumber);
-      setConfig(data ?? null);
-    }, [])
-  );
+  const fetchArg = localStorage.getItem('text') || 'photo';
+
+  const {
+    data: config,
+    isFetching: isPhotosLoading,
+    error,
+    refetch,
+  } = useFetchResultsQuery({ inputText: fetchArg, page });
 
   useEffect(() => {
-    if (typeof fetchData === 'function') {
-      void fetchData(page);
-    }
-  }, [heading, page, fetchData]);
+    const handleOnline = () => {
+      refetch();
+    };
+
+    window.addEventListener('online', handleOnline);
+    return () => window.removeEventListener('online', handleOnline);
+  }, [refetch]);
+
+  const handleRefresh = () => {
+    dispatch(
+      flickrApi.util.invalidateTags([{ type: 'Cards', id: `${text}_${page}` }])
+    );
+  };
 
   const handleChangePage = (p: number) => {
     setSearchParams({ page: String(p) });
@@ -90,6 +98,12 @@ export function App() {
           }}
         ></div>
         <header className="header app__header">
+          <Button
+            classname="button refresh-button"
+            text="Refresh this page"
+            type="button"
+            onclickFunction={handleRefresh}
+          />
           <Link to={'about'} className={'link app__link'}>
             About
           </Link>
@@ -115,7 +129,8 @@ export function App() {
           showModal={setModal}
           setSearchParams={setSearchParams}
           params={params}
-          errorMessage={errorMessage}
+          errorMessage={error}
+          headingText={heading}
         />
         <Modal
           visible={modal}

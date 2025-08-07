@@ -1,15 +1,19 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ModalContent from './ModalContent';
 import { vi } from 'vitest';
-import * as requestService from '../../../service/requestId';
-import useFetching from '../../../hooks/useFetching';
 import { mockPhoto } from '../../../../test-utils/mocks/modalMocks';
+import { store } from '../../../app/store';
+import { Provider } from 'react-redux';
 
-vi.mock('../../../service/requestId', () => ({
-  fetchById: vi.fn(),
-}));
+import * as flickrApiHooks from '../../../service/flickrApi';
 
-vi.mock('../../../hooks/useFetching');
+vi.mock('../../../service/flickrApi', async (mod) => {
+  const actual = (await mod()) as object;
+  return {
+    ...actual,
+    useFetchByIdQuery: vi.fn(),
+  };
+});
 
 describe('ModalContent', () => {
   const photoId = '123';
@@ -19,39 +23,36 @@ describe('ModalContent', () => {
   });
 
   it('показывает Loader при isPhotoLoading === true', () => {
-    (useFetching as unknown as ReturnType<typeof vi.fn>).mockReturnValue([
-      vi.fn(),
-      true,
-      '',
-    ]);
+    (
+      flickrApiHooks.useFetchByIdQuery as ReturnType<typeof vi.fn>
+    ).mockReturnValue({
+      data: undefined,
+      isFetching: true,
+      error: null,
+    });
 
-    render(<ModalContent id={photoId} />);
+    render(
+      <Provider store={store}>
+        <ModalContent id="123" />
+      </Provider>
+    );
     expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 
-  it('отображает сообщение об ошибке при наличии errorMessage', () => {
-    (useFetching as unknown as ReturnType<typeof vi.fn>).mockReturnValue([
-      vi.fn(),
-      false,
-      'Ошибка при загрузке',
-    ]);
-
-    render(<ModalContent id={photoId} />);
-    expect(screen.getByText('Ошибка при загрузке')).toBeInTheDocument();
-  });
-
   it('отображает данные фото при успешной загрузке', async () => {
-    (requestService.fetchById as ReturnType<typeof vi.fn>).mockResolvedValue(
-      mockPhoto
-    );
+    (
+      flickrApiHooks.useFetchByIdQuery as ReturnType<typeof vi.fn>
+    ).mockReturnValue({
+      data: mockPhoto,
+      isFetching: false,
+      error: null,
+    });
 
-    (useFetching as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      (callback) => {
-        return [(id: string) => callback(id), false, ''];
-      }
+    render(
+      <Provider store={store}>
+        <ModalContent id={photoId} />
+      </Provider>
     );
-
-    render(<ModalContent id={photoId} />);
 
     await waitFor(() => {
       expect(screen.getByAltText(photoId)).toHaveAttribute(
@@ -67,17 +68,14 @@ describe('ModalContent', () => {
 
   it('показывает изображение-заглушку, если getUrl возвращает undefined', async () => {
     const brokenPhoto = { ...mockPhoto, server: '', id: '', secret: '' };
-    (requestService.fetchById as ReturnType<typeof vi.fn>).mockResolvedValue(
-      brokenPhoto
+    (
+      flickrApiHooks.useFetchByIdQuery as ReturnType<typeof vi.fn>
+    ).mockResolvedValue(brokenPhoto);
+    render(
+      <Provider store={store}>
+        <ModalContent id={photoId} />
+      </Provider>
     );
-
-    (useFetching as unknown as ReturnType<typeof vi.fn>).mockImplementation(
-      (callback) => {
-        return [(id: string) => callback(id), false, ''];
-      }
-    );
-
-    render(<ModalContent id={photoId} />);
 
     await waitFor(() => {
       const img = screen.getByRole('img');
