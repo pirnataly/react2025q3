@@ -12,6 +12,7 @@ export default function Modal({
   params,
 }: Partial<ModalProps>) {
   const mainClasses = [classes.modal];
+
   if (visible) {
     mainClasses.push(classes.modal_active);
   }

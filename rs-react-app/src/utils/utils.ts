@@ -1,5 +1,7 @@
 import { Item } from '../features/selectedItemsSlice';
-import { Theme } from '../interfaces/types';
+import { SuccessFetchAnswerByID, Theme } from '../interfaces/types';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
+import { SerializedError } from '@reduxjs/toolkit';
 
 export function getPagesArray(start: number, end: number) {
   const step = 1;
@@ -88,4 +90,36 @@ export function startFileDownload(url: string, fileName: string): void {
 
 export function getTheme(theme: Theme) {
   return theme === 'light' ? 'dark' : 'light';
+}
+
+export function getErrorMessage(
+  error: FetchBaseQueryError | SerializedError | undefined
+) {
+  let errorMessage = '';
+
+  if (error && typeof error === 'object' && 'message' in error) {
+    return error.message;
+  }
+
+  if (error && typeof error === 'object' && 'status' in error) {
+    if (typeof error.data === 'string') {
+      errorMessage = error.data;
+    } else {
+      errorMessage = `${String(error.status)}`;
+    }
+  }
+  return errorMessage || 'Unknown mistake';
+}
+
+export function transformResponseFn(
+  error: FetchBaseQueryError | SerializedError | undefined
+) {
+  return getErrorMessage(error) || 'Unknown mistake';
+}
+
+export function transformResponseFnById(
+  response: SuccessFetchAnswerByID | undefined
+) {
+  if (!response || !response.photo) return undefined;
+  return response.photo;
 }

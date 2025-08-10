@@ -1,23 +1,15 @@
 import classes from './ModalContent.module.css';
-import useFetching from '../../../hooks/useFetching';
-import { ModalComponent, PhotoByIdType } from '../../../interfaces/types';
-import { useCallback, useEffect, useState } from 'react';
+import { ModalComponent } from '../../../interfaces/types';
 import Loader from '../loader/Loader';
-import { fetchById } from '../../../service/requestId';
+import { useFetchByIdQuery } from '../../../service/flickrApi';
+import { getErrorMessage } from '../../../utils/utils';
 
 export default function ModalContent({ id }: ModalComponent) {
-  const [modalData, setModalData] = useState<null | PhotoByIdType>(null);
-  const fetchCallback = useCallback(async (PhotoId: string | null) => {
-    if (PhotoId) {
-      const data = await fetchById(String(PhotoId));
-      if (data && data !== 'bad') {
-        setModalData(data);
-      }
-    }
-  }, []);
-
-  const [fetchPhotoById, isPhotoLoading, errorMessage] =
-    useFetching(fetchCallback);
+  const {
+    data: modalData,
+    isFetching: isPhotoLoading,
+    error,
+  } = useFetchByIdQuery(id);
 
   function getUrl() {
     if (modalData) {
@@ -25,17 +17,15 @@ export default function ModalContent({ id }: ModalComponent) {
     }
   }
 
-  useEffect(() => {
-    fetchPhotoById(id);
-  }, [id, fetchPhotoById]);
-
   if (isPhotoLoading) {
     return <Loader />;
   }
   return (
     <div data-test-id={'modal-content'} className={classes.modalContent}>
-      {errorMessage ? (
-        <h1 className={classes.errorMessage}>{errorMessage}</h1>
+      {error ? (
+        <h1
+          className={classes.errorMessage}
+        >{`Error: ${getErrorMessage(error)}`}</h1>
       ) : (
         <>
           <img

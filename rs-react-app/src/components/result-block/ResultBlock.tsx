@@ -12,25 +12,19 @@ function ResultBlock({
   setSearchParams,
   isPhotoLoading,
   params,
+  errorMessage,
+  headingText,
 }: ResultProps) {
-  const resultFromRequest = result ?? 'bad';
-  const photos: [] | Photo[] =
-    typeof resultFromRequest === 'string' ||
-    resultFromRequest.photos.photo.length === 0
+  const photos: Photo[] =
+    result === undefined || result.photos.photo.length === 0
       ? []
-      : resultFromRequest.photos.photo;
-  const pages =
-    typeof resultFromRequest === 'string' ? 0 : resultFromRequest.photos.pages;
-  const total =
-    typeof resultFromRequest === 'string' ? 0 : resultFromRequest.photos.total;
-
-  const headingText = localStorage.getItem('text')
-    ? localStorage.getItem('text')
-    : '';
-  const nameOfClass = result === null ? 'spinner' : 'results__container';
+      : result.photos.photo;
+  const pages = result === undefined ? 0 : result.photos.pages;
+  const total = result === undefined ? 0 : result.photos.total;
+  const nameOfClass = isPhotoLoading ? 'spinner' : 'results__container';
 
   if (
-    typeof resultFromRequest !== 'string' &&
+    result &&
     ((pages < page && pages !== 0 && page !== 1) || Number.isNaN(page))
   ) {
     return (
@@ -48,11 +42,11 @@ function ResultBlock({
     );
   }
 
-  if (typeof resultFromRequest === 'string' && resultFromRequest !== 'bad') {
+  if (result === undefined && errorMessage) {
     return (
       <div
         className={nameOfClass}
-      >{`Something went wrong. Mistake:${resultFromRequest}`}</div>
+      >{`Something went wrong. Mistake:${errorMessage}`}</div>
     );
   }
   if (isPhotoLoading) {

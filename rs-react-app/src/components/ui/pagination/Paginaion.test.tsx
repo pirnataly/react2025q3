@@ -27,6 +27,7 @@ describe('Pagination via ResultBlock', () => {
     fireEvent.click(btn);
     expect(mockChangePage).toHaveBeenCalledWith(3);
   });
+
   it('клик по Next вызывает getNextPagesArray и меняет страницы', () => {
     const mockNext = vi
       .spyOn(utils, 'getNextPagesArray')
@@ -53,6 +54,7 @@ describe('Pagination via ResultBlock', () => {
         <ResultBlock
           changePage={mockChangePage}
           result={mockSuccessConfig}
+          headingText={'Some heading'}
           page={1}
           showModal={mockShowModal}
           setSearchParams={mockSetSearchParams}
@@ -76,6 +78,7 @@ describe('Pagination via ResultBlock', () => {
           changePage={mockChangePage}
           result={mockSuccessConfig}
           page={1}
+          headingText={'headingText'}
           showModal={mockShowModal}
           setSearchParams={mockSetSearchParams}
           isPhotoLoading={false}
@@ -96,6 +99,7 @@ describe('Pagination via ResultBlock', () => {
         changePage={mockChangePage}
         result={mockSuccessConfig}
         page={100}
+        headingText={'headingText'}
         showModal={mockShowModal}
         setSearchParams={mockSetSearchParams}
         isPhotoLoading={false}
@@ -114,7 +118,8 @@ describe('Pagination via ResultBlock', () => {
     render(
       <ResultBlock
         changePage={mockChangePage}
-        result={null}
+        result={undefined}
+        headingText={'headingText'}
         page={1}
         showModal={mockShowModal}
         setSearchParams={mockSetSearchParams}
@@ -128,16 +133,18 @@ describe('Pagination via ResultBlock', () => {
   });
 
   it('отображает сообщение об ошибке, если результат строка', () => {
+    const badMessage = 'something bad happened';
     render(
       <ResultBlock
         changePage={mockChangePage}
-        result={'something bad happened'}
+        result={undefined}
         page={1}
+        headingText={'headingText'}
         showModal={mockShowModal}
         setSearchParams={mockSetSearchParams}
         isPhotoLoading={false}
         params={new URLSearchParams()}
-        errorMessage={''}
+        errorMessage={badMessage}
       />
     );
 
