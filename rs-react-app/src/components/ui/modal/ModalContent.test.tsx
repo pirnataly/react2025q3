@@ -4,7 +4,6 @@ import { vi } from 'vitest';
 import { mockPhoto } from '../../../../test-utils/mocks/modalMocks';
 import { store } from '../../../app/store';
 import { Provider } from 'react-redux';
-
 import * as flickrApiHooks from '../../../service/flickrApi';
 
 vi.mock('../../../service/flickrApi', async (mod) => {

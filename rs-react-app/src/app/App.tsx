@@ -49,6 +49,7 @@ export function App() {
     dispatch(
       flickrApi.util.invalidateTags([{ type: 'Cards', id: `${text}_${page}` }])
     );
+    refetch();
   };
 
   const handleChangePage = (p: number) => {

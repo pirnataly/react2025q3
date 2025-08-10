@@ -21,7 +21,7 @@ function ResultBlock({
       : result.photos.photo;
   const pages = result === undefined ? 0 : result.photos.pages;
   const total = result === undefined ? 0 : result.photos.total;
-  const nameOfClass = result === undefined ? 'spinner' : 'results__container';
+  const nameOfClass = isPhotoLoading ? 'spinner' : 'results__container';
 
   if (
     result &&

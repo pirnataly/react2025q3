@@ -4,11 +4,8 @@ import {
   IdType,
   PhotoByIdType,
   SuccessFetchAnswer,
-  SuccessFetchAnswerByID,
 } from '../interfaces/types';
-import { getErrorMessage } from '../utils/utils';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { SerializedError } from '@reduxjs/toolkit';
+import { transformResponseFn, transformResponseFnById } from '../utils/utils';
 
 export const flickrApi = createApi({
   reducerPath: 'flickrApi',
@@ -37,9 +34,7 @@ export const flickrApi = createApi({
           privacy_filter: '1',
         },
       }),
-      transformErrorResponse: (
-        error: FetchBaseQueryError | SerializedError | undefined
-      ) => getErrorMessage(error) || 'Unknown mistake',
+      transformErrorResponse: transformResponseFn,
       providesTags: (_result, _error, { inputText, page }) => [
         { type: 'Cards', id: `${inputText}_${page}` },
       ],
@@ -56,10 +51,7 @@ export const flickrApi = createApi({
           nojsoncallback: '1',
         },
       }),
-      transformResponse: (response: SuccessFetchAnswerByID | undefined) => {
-        if (!response || !response.photo) return undefined;
-        return response.photo;
-      },
+      transformResponse: transformResponseFnById,
       providesTags: (_, __, id) => (id ? [{ type: 'Card', id }] : []),
     }),
   }),

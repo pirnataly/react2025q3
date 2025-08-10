@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { URLSearchParamsInit } from 'react-router';
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 export type AppState = {
   text: string;
@@ -24,7 +24,7 @@ export type ResultProps = {
   showModal: (arg: boolean) => void;
   setSearchParams: (arg: URLSearchParamsInit) => void;
   params: URLSearchParams;
-  errorMessage: FetchBaseQueryError | SerializedError | undefined;
+  errorMessage: FetchBaseQueryError | SerializedError | undefined | string;
   headingText: string;
 };
 

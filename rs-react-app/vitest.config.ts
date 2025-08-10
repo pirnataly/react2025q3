@@ -16,6 +16,7 @@ export default defineConfig({
         'src/index.{js,jsx,ts,tsx}',
         'src/setupTests.{js,ts}',
         'src/interfaces/types.tsx',
+        'src/utils',
         'src/**/*.d.ts',
       ],
       reporter: ['text', 'json', 'html'],

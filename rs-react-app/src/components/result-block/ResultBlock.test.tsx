@@ -28,7 +28,6 @@ describe('Rendering tests for ResultBlock', () => {
         total: 0,
       },
     };
-
     localStorage.setItem('text', 'nothing');
     render(
       <Provider store={store}>
@@ -39,6 +38,7 @@ describe('Rendering tests for ResultBlock', () => {
           showModal={mockShowModal}
           setSearchParams={mockSetSearchParams}
           errorMessage={''}
+          headingText="headingText"
           isPhotoLoading={false}
           params={mockUrlSearchParams}
         />
@@ -63,6 +63,7 @@ describe('Rendering tests for ResultBlock', () => {
           setSearchParams={mockSetSearchParams}
           errorMessage={''}
           isPhotoLoading={false}
+          headingText="cats"
           params={mockUrlSearchParams}
         />
       </Provider>
@@ -74,26 +75,25 @@ describe('Rendering tests for ResultBlock', () => {
     expect(
       screen.getByText(/results were found for request/i)
     ).toBeInTheDocument();
-    expect(screen.getByText(/cats/i)).toBeInTheDocument();
+    expect(screen.getByText(/Photo 3/i)).toBeInTheDocument();
   });
 
   it('Shows loading state while fetching data', () => {
-    const { container } = render(
-      <Provider store={store}>
-        <ResultBlock
-          result={null}
-          page={1}
-          changePage={mockChangePage}
-          showModal={mockShowModal}
-          setSearchParams={mockSetSearchParams}
-          errorMessage={''}
-          isPhotoLoading={false}
-          params={mockUrlSearchParams}
-        />
-      </Provider>
+    render(
+      <ResultBlock
+        changePage={vi.fn()}
+        result={undefined}
+        page={1}
+        showModal={vi.fn()}
+        setSearchParams={vi.fn()}
+        isPhotoLoading={true}
+        params={mockUrlSearchParams}
+        errorMessage={undefined}
+        headingText="test"
+      />
     );
-    const spinner = container.querySelector('.spinner');
-    expect(spinner).toBeInTheDocument();
+
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
 });
 
@@ -111,6 +111,7 @@ describe('ResultBlock Data Display Tests', () => {
           setSearchParams={mockSetSearchParams}
           errorMessage={''}
           isPhotoLoading={false}
+          headingText={'headingText'}
           params={mockUrlSearchParams}
         />
       </Provider>
@@ -129,12 +130,13 @@ describe('ResultBlock Error Handling Tests', () => {
     render(
       <Provider store={store}>
         <ResultBlock
-          result={errorMessage}
+          result={undefined}
+          headingText={'headingText'}
           page={1}
           changePage={mockChangePage}
           showModal={mockShowModal}
           setSearchParams={mockSetSearchParams}
-          errorMessage={''}
+          errorMessage={errorMessage}
           isPhotoLoading={false}
           params={mockUrlSearchParams}
         />

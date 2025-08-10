@@ -1,5 +1,5 @@
 import { Item } from '../features/selectedItemsSlice';
-import { Theme } from '../interfaces/types';
+import { SuccessFetchAnswerByID, Theme } from '../interfaces/types';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { SerializedError } from '@reduxjs/toolkit';
 
@@ -96,6 +96,7 @@ export function getErrorMessage(
   error: FetchBaseQueryError | SerializedError | undefined
 ) {
   let errorMessage = '';
+
   if (error && typeof error === 'object' && 'message' in error) {
     return error.message;
   }
@@ -108,4 +109,17 @@ export function getErrorMessage(
     }
   }
   return errorMessage || 'Unknown mistake';
+}
+
+export function transformResponseFn(
+  error: FetchBaseQueryError | SerializedError | undefined
+) {
+  return getErrorMessage(error) || 'Unknown mistake';
+}
+
+export function transformResponseFnById(
+  response: SuccessFetchAnswerByID | undefined
+) {
+  if (!response || !response.photo) return undefined;
+  return response.photo;
 }
