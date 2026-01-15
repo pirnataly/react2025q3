@@ -1,16 +1,16 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import './App.css';
-import ResultBlock from './../components/result-block/ResultBlock';
-import { SearchBlock } from '../components/search-block/SearchBlock';
-import { Link, useNavigate, useSearchParams } from 'react-router';
-import Modal from './../components/ui/modal/Modal';
-import { useLocalStorage } from '../hooks/useLocalStorage';
-import { Flyout } from '../features/Flyout';
-import { Button } from '../components/ui/button/Button';
-import { ThemeContext } from '../contexts/ThemeContext';
-import { getTheme } from '../utils/utils';
-import { flickrApi, useFetchResultsQuery } from '../service/flickrApi';
-import { useDispatch } from 'react-redux';
+// import React, { useCallback, useContext, useEffect, useState } from 'react';
+// import './App.css';
+// import ResultBlock from './../components/result-block/ResultBlock';
+// import { SearchBlock } from '../components/search-block/SearchBlock';
+// import { Link, useNavigate, useSearchParams } from 'react-router';
+// import Modal from './../components/ui/modal/Modal';
+// import { useLocalStorage } from '../hooks/useLocalStorage';
+// import { Flyout } from '../features/Flyout';
+// import { Button } from '../components/ui/button/Button';
+// import { ThemeContext } from '../contexts/ThemeContext';
+// import { getTheme } from '../utils/utils';
+// import { flickrApi, useFetchResultsQuery } from '../service/flickrApi';
+// import { useDispatch } from 'react-redux';
 
 export function App() {
   // const { theme, setTheme } = useContext(ThemeContext);
