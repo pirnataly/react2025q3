@@ -6,9 +6,9 @@ import About from '../../pages/About';
 export default function RouterComponent() {
   return (
     <Routes>
-      <Route path='/' element={<App />} />
-      <Route path='about' element={<About />} />
-      <Route path='*' element={<NotFound />} />
+      <Route path="/" element={<App />} />
+      <Route path="about" element={<About />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
