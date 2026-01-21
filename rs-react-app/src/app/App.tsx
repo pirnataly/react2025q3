@@ -13,6 +13,7 @@
 // import { useDispatch } from 'react-redux';
 
 export function App() {
+  console.log('APP RENDER');
   // const { theme, setTheme } = useContext(ThemeContext);
   // const navigate = useNavigate();
   // const [params, setSearchParams] = useSearchParams({});
