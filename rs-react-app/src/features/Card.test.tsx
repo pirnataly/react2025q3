@@ -4,6 +4,7 @@ import { Card } from './Card';
 import { Provider } from 'react-redux';
 import { store } from '../app/store';
 import { mockPhotos } from '../../test-utils/mocks/resultBlockMock';
+import { expect, test, vi } from 'vitest';
 
 const mockPhotoCard = mockPhotos[0];
 

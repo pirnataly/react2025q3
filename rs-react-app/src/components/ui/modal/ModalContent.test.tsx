@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import ModalContent from './ModalContent';
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockPhoto } from '../../../../test-utils/mocks/modalMocks';
 import { store } from '../../../app/store';
 import { Provider } from 'react-redux';

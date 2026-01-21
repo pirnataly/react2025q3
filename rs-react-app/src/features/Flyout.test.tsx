@@ -4,6 +4,7 @@ import { Flyout } from './Flyout';
 import { Provider } from 'react-redux';
 import { store } from '../app/store';
 import { addItem } from './selectedItemsSlice';
+import { expect, test } from 'vitest';
 
 test('dispatch calls clearItems by clicking "Unselect all" button', async () => {
   store.dispatch(addItem({ id: '1', title: 'Test', url_l: 'url' }));

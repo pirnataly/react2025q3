@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import ResultBlock from './../../result-block/ResultBlock';
-import { vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { mockSuccessConfig } from '../../../../test-utils/mocks/resultBlockMock';
 import Pagination from './Pagination';
 import * as utils from '../../../utils/utils';

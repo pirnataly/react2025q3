@@ -1,4 +1,4 @@
-import { expect, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import * as flickrApiHooks from '../service/flickrApi';
 import { mockSuccessConfig } from '../../test-utils/mocks/resultBlockMock';
 import { renderWithRouter } from '../../test-utils/renderWithRouter';
