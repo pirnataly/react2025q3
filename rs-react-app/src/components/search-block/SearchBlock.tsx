@@ -16,11 +16,13 @@ export function SearchBlock({
       }}
     >
       <input
+        id="search-input"
+        name="search-input"
         type="search"
         className="search__input"
         value={text}
         onChange={handleChangeInput}
-        placeholder="Введите текст"
+        placeholder="Enter a search term"
       />
 
       <Button
